@@ -8,7 +8,7 @@ Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/ta
 (GreasemonkeyやViolentmonkeyでの動作は未確認です)  
 ChromeやOperaでの動作は未確認です。既読スレピックアップ機能が動作しないのでオリジナル版の使用を推奨します。  
 
-※このUserscriptはFirefoxアドオンKOSHIAN Catarog Marker kaiとの併用を推奨しています。  
+※このUserscriptはFirefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)との併用を推奨しています。  
 [赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)にも一応対応しているはずですが、オリジナル版の使用を推奨します。
 
 ※KOSHIANアドオン改変版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
@@ -36,7 +36,7 @@ ChromeやOperaでの動作は未確認です。既読スレピックアップ機
   - 通常はKOSHIAN Catalog Marker kaiアドオンがマークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。
 
 ## 注意事項
-* FirefoxアドオンKOSHIAN Catarog Marker kaiは必ず**v1.1以上**をインストールしてください。  
+* Firefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)は必ず**v1.1以上**をインストールしてください。  
 （[AMO](https://addons.mozilla.org/ja/firefox/)にあるPachira氏のKOSHIAN 開いたスレをカタログにマークアドオンとは異なるのでご注意下さい）
 * 既読スレのピックアップをしない（できない）場合はスクリプト内の設定USE\_PICKUP\_OPENED\_THREADをfalseにしてください。
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
