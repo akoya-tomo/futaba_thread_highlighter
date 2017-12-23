@@ -17,10 +17,28 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 (function ($) {
+	/*
+	 *	設定
+	 */
+	var USE_BOARD_NAME = true;					//タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する
+	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する（要KOSHIAN Catalog Marker Kai v1.1+）
+	var KOSHIAN_CATALOG_MARKER_STYLE = "";		//KOSHIAN Catalog Markerの「開いたスレのスタイル」設定
+
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
 	var serverFullPath = serverName + "_" + pathName;
 	var akahukuloadstat;
+	var openedThreadCssText = KOSHIAN_CATALOG_MARKER_STYLE;
+	var pickupedOpenedThreadCss =
+			//ピックアップ既読スレスタイル
+			"  max-width: 250px;" +
+			"  min-width: 70px;" +
+			"  margin: 1px;" +
+			"  border-radius: 5px;" +
+			"  word-wrap: break-word;";
+	var boardName = $("#tit").text().match(/^[^＠]+/);
+	var selectName = $("body > b > a").text();
+	var timer_kcm;
 
 	init();
 
@@ -30,10 +48,13 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		console.log("futaba_thread_highlighter indivisual: " +
 			getCurrentIndivValue());
 		GM_registerMenuCommand("スレッド検索ワード編集", editWords);
+		setTitle();
 		setStyle();
 		makecontainer();
 		makeConfigUI();
-		highlight();
+		check_timeout();
+		//check_timeout内でhighlight呼び出しに変更
+//		highlight();
 		check_akahuku_reload();
 	}
 
@@ -335,9 +356,39 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						}
 					}, 10);
 				}
+				//カタログでマークされたことを検出
+				else if (nodes.length && USE_PICKUP_OPENED_THREAD) {
+					if (nodes[0].id == "kcm_mark_opened_thre_comp") {
+						clearTimeout(timer_kcm);
+						highlight();
+						pickup_opened_threads();
+					}
+					else if (nodes[0].id == "kcm_mark_thre_comp") {
+						nodes.remove();
+						pickup_opened_threads();
+					}
+				}
 			});
 		});
 		observer.observe(target, { childList: true });
+	}
+
+	/*
+	 *KOSHIAN CatalogMarkerKaiマーク完了応答時間切れ確認
+	 */
+	function check_timeout() {
+		if (USE_PICKUP_OPENED_THREAD) {
+			timer_kcm = setTimeout(function() {
+				if (!$("#kcm_mark_opened_thre_comp").length) {
+					console.log("futaba_thread_highlighter : kcm timeout");
+					highlight();
+					pickup_opened_threads();
+				}
+			}, 3000);
+		}else {
+			//既読ピックアップ無効のときはハイライト呼び出し
+			highlight();
+		}
 	}
 
 	/*
@@ -369,7 +420,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if( words !== "" ) {
 			removeOldHighlighted();
 			$("body > table[border] td small").each(function(){
-				if( $(this).text().match(re) ) {
+				if( $(this).text().match(re) &&
+                  ( $(this).parent("td").attr("style") != "display: none;" ) &&	//ねないこNGスレ判定追加
+				  ( $(this).attr("style") != "display: none;" )) {				//ねないこNGスレ判定追加
 					if ( !$(this).children(".GM_fth_matchedword").length ) {
 						$(this).html($(this).html().replace(re,
 							"<span class='GM_fth_matchedword'>" +
@@ -432,6 +485,44 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 
 	/*
+	 *既読スレを先頭にピックアップ
+	 */
+	function pickup_opened_threads() {
+		if ( $("#GM_fth_highlighted_threads .GM_fth_opened").length ) {
+			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
+		}
+		//ピックアップ済みは除外
+		var kcm_opened = $("body > table td[class = 'GM_kcm_opened'][class != 'GM_fth_pickuped']").clone();
+		//KOSHIAN_CATALOG_MARKER_STYLEが未設定ならマークされたスタイルをコピー
+		if (kcm_opened.length && !openedThreadCssText) {
+			openedThreadCssText = kcm_opened.get(0).style.cssText;
+			setOpenedThreadStyle();
+		}
+
+		$("#GM_fth_highlighted_threads").append(kcm_opened);
+		//要素の中身を整形
+		kcm_opened.each(function(){
+			if ( !$(this).children("small").length ) {		//文字スレ
+				//console.log($(this).children("a").html());
+				//$(this).children("a").replaceWith("<div class='GM_fth_opened_caption'>" + $(this).html() + "</div>");
+			} else {
+				$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_opened_caption'>" +
+													  $(this).children("small").html() + "</div>");
+				$(this).children("br").replaceWith();
+			}
+			$(this).replaceWith("<div class='GM_fth_opened'>" + $(this).html() + "</div>");
+		});
+		var $fth_opened = $(".GM_fth_opened");
+		$fth_opened.each(function(){
+			var fth_opened_width = $(this).find("img").attr("width");
+			$(this).css({
+				//スレ画の幅に合わせる
+				width: fth_opened_width,
+			});
+		});
+	}
+
+	 /*
 	 *スタイル設定
 	 */
 	function setStyle() {
@@ -457,7 +548,46 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			".GM_fth_pickuped_caption {" +
 			"  font-size: small;" +
 			"  background-color: #ffdfe9;" +
+			"}" +
+			//既読セル
+			//KOSHIAN Catarog Markerでマークするので未設定
+//			".GM_kcm_opened {" +
+//			   openedThreadCssText +
+//			"}" +
+			//ピックアップ既読スレ
+			".GM_fth_opened {" +
+			   pickupedOpenedThreadCss +
+			   openedThreadCssText +
+			"}" +
+			//ピックアップ既読スレ本文
+			".GM_fth_opened_caption {" +
+			"  font-size: small;" +
 			"}";
 		GM_addStyle(css);
 	}
+
+	/*
+	 *ピックアップ既読スレスタイル設定
+	 */
+	function setOpenedThreadStyle() {
+		var openedThreadCss =
+			".GM_fth_opened {" +
+			   pickupedOpenedThreadCss +
+			   openedThreadCssText + ";" +
+			"}";
+		GM_addStyle(openedThreadCss);
+	}
+
+	/*
+	 *タイトル設定
+	 */
+	function setTitle() {
+		if (USE_BOARD_NAME) {
+			if(boardName == "二次元裏"){
+				boardName = serverName;
+			}
+			document.title = boardName + ' ' + selectName;
+		}
+	}
+
 })(jQuery);
