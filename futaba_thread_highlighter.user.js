@@ -420,7 +420,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if( words !== "" ) {
 			removeOldHighlighted();
 			$("body > table[border] td small").each(function(){
-				if( $(this).text().match(re) ) {
+				if( $(this).text().match(re) &&
+                  ( $(this).parent("td").attr("style") != "display: none;" ) &&	//ねないこNGスレ判定追加
+				  ( $(this).attr("style") != "display: none;" )) {				//ねないこNGスレ判定追加
 					if ( !$(this).children(".GM_fth_matchedword").length ) {
 						$(this).html($(this).html().replace(re,
 							"<span class='GM_fth_matchedword'>" +
