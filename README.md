@@ -1,33 +1,56 @@
-## なにコレ
-ブラウザ上で動くUserscriptです
-
+## futaba thread highlighter K
+このUserscriptは[himuro\_majika](https://github.com/himuro-majika)氏の[futaba thread highlighter](https://github.com/himuro-majika/futaba_thread_highlighter)を改変したものです。  
 ふたば☆ちゃんねるのカタログに現在表示されているすべてのスレ本文の文字列を監視してページトップに一覧表示します。  
 一度検索ワードを設定しておけば定時スレ等が探しやすくなります。  
+またFirefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)との連携で既読スレのピックアップもできます。
 
+Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/tampermonkey/)を先にインスールしてからスクリプトをインストールして下さい。  
+(GreasemonkeyやViolentmonkeyでの動作は未確認です)  
+ChromeやOperaでの動作は未確認です。既読スレピックアップ機能が動作しないのでオリジナル版の使用を推奨します。  
 
-Firefoxの場合、[Greasemonkey](https://addons.mozilla.org/ja/firefox/addon/greasemonkey/)を先にインスールしてからスクリプトをインストールして下さい(Scriptishは動作対象外です)  
-Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい  
-Opera(ver.15+)の場合、[Tampermonkey](https://addons.opera.com/extensions/details/tampermonkey-beta/)を先にインスールしてからスクリプトをインストールして下さい  
+※このUserscriptはFirefoxアドオンKOSHIAN Catarog Marker kaiとの併用を推奨しています。  
+[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)にも一応対応しているはずですが、オリジナル版の使用を推奨します。
 
-※このUserscriptは[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)に対応しています。
+※KOSHIANアドオン改変版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
 
 ## 使い方
 * ふたばのカタログモードの設定で「文字数」を適当な大きさ(4以上推奨)に設定してください。(板毎に設定が必要です)
 * スレッド検索該当スレッドの[設定]ボタンをクリックして監視したい検索ワードを入力してください。
-|で区切ると複数の語句を指定できます。(正規表現使用可。特殊な記号　\*?+.^$|()[]{}　は全て正規表現のメタキャラクタとして認識されます。)
-(Ver.1.5)検索ワードは全板共通と各板個別でそれぞれ設定できます。
+|で区切ると複数の語句を指定できます。(正規表現使用可。特殊な記号　\\*?+.^$|()[]{}　は全て正規表現のメタキャラクタとして認識されます。)  
+検索ワードは全板共通と各板個別でそれぞれ設定できます。  
+* (rev1)KOSHIAN Catarog Marker kaiとの連携で既読スレをピックアップできます。（デフォルト：有効）
+* (rev1)タブの表示を「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更します。（デフォルト：有効）
+* (rev1)ねないこのNGスレをピックアップしないようにしました。
+
+## インストール
+[GreasyFork](https://greasyfork.org/ja/scripts/36235-futaba-thread-highlighter-K)　
+[GitHub](https://github.com/akoya-tomo/futaba_thread_highlighter_K/raw/master/futaba_thread_highlighter.user.js)
+
+
+## 設定
+機能の動作はスクリプト冒頭の大文字変数をエディタで編集すれば変更することができます。  
+
+* USE\_BOARD\_NAME:タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する\(*true*\)  
+* USE\_PICKUP\_OPENED\_THREAD:既読ピックアップ機能を使用する（要KOSHIAN Catalog Marker kai v1.1以上）\(*true*\)  
+* KOSHIAN\_CATALOG\_MARKER\_STYLE:既読マークのスタイル\(*""*\)  
+  - 通常はKOSHIAN Catalog Marker kaiアドオンがマークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。
 
 ## 注意事項
-Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
-
-## おまけ
-スレ本文の文字数を増やしたらカタログが見づらくて生きるのが辛い場合  
-こちらのユーザースタイルシートも使ってみてください。  
-[futaba_catalog_mod(モダンバージョン)](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)  
-または  
-[futaba_catalog_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
+* FirefoxアドオンKOSHIAN Catarog Marker kaiは必ず**v1.1以上**をインストールしてください。  
+（[AMO](https://addons.mozilla.org/ja/firefox/)にあるPachira氏のKOSHIAN 開いたスレをカタログにマークアドオンとは異なるのでご注意下さい）
+* 既読スレのピックアップをしない（できない）場合はスクリプト内の設定USE\_PICKUP\_OPENED\_THREADをfalseにしてください。
+* Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
 
 ## 更新履歴
+* v1.6.6rev1 2017-12-23
+  - KOSHIAN Catarog Marker kaiとの連携で既読スレのピックアップ機能を追加
+  - 板名＋ソート名をタブに表示する機能を追加
+  - ねないこのNGスレをピックアップしないように変更
+
+***
+
+以下、オリジナル版futaba thread highlighterの更新履歴  
+
 * v.1.6.6 2017-03-04
   - 赤福と合間合間にを同時に使用している場合に該当スレッドの表示が乱れる問題を修正(thanks akoya_tomo)
 * v.1.6.5 2017-02-25
