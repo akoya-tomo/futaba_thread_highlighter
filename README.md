@@ -23,7 +23,7 @@ ChromeやOperaでの動作は未確認です。既読スレピックアップ機
 * (rev1)ねないこのNGスレをピックアップしないようにしました。
 
 ## インストール
-[GreasyFork](https://greasyfork.org/ja/scripts/36235-futaba-thread-highlighter-K)　
+[GreasyFork](https://greasyfork.org/ja/scripts/36639-futaba-thread-highlighter-k)　
 [GitHub](https://github.com/akoya-tomo/futaba_thread_highlighter_K/raw/master/futaba_thread_highlighter.user.js)
 
 
