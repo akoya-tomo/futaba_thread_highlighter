@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev1
+// @version     1.6.6rev2
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -379,11 +379,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	function check_timeout() {
 		if (USE_PICKUP_OPENED_THREAD) {
 			timer_kcm = setTimeout(function() {
-				if (!$("#kcm_mark_opened_thre_comp").length) {
+//				if (!$("#kcm_mark_opened_thre_comp").length) {
 					console.log("futaba_thread_highlighter : kcm timeout");
 					highlight();
 					pickup_opened_threads();
-				}
+//				}
 			}, 3000);
 		}else {
 			//既読ピックアップ無効のときはハイライト呼び出し
