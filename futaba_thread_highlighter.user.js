@@ -379,11 +379,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	function check_timeout() {
 		if (USE_PICKUP_OPENED_THREAD) {
 			timer_kcm = setTimeout(function() {
-				if (!$("#kcm_mark_opened_thre_comp").length) {
+//				if (!$("#kcm_mark_opened_thre_comp").length) {
 					console.log("futaba_thread_highlighter : kcm timeout");
 					highlight();
 					pickup_opened_threads();
-				}
+//				}
 			}, 3000);
 		}else {
 			//既読ピックアップ無効のときはハイライト呼び出し
