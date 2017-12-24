@@ -52,10 +52,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setStyle();
 		makecontainer();
 		makeConfigUI();
-		check_timeout();
 		//check_timeout内でhighlight呼び出しに変更
 //		highlight();
 		check_akahuku_reload();
+		check_timeout();
 	}
 
 	/*
@@ -359,6 +359,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				//カタログでマークされたことを検出
 				else if (nodes.length && USE_PICKUP_OPENED_THREAD) {
 					if (nodes[0].id == "kcm_mark_opened_thre_comp") {
+						nodes[0].id = "fth_receive_mark_comp";
 						clearTimeout(timer_kcm);
 						highlight();
 						pickup_opened_threads();
@@ -378,13 +379,20 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function check_timeout() {
 		if (USE_PICKUP_OPENED_THREAD) {
-			timer_kcm = setTimeout(function() {
-//				if (!$("#kcm_mark_opened_thre_comp").length) {
-					console.log("futaba_thread_highlighter : kcm timeout");
-					highlight();
-					pickup_opened_threads();
-//				}
-			}, 3000);
+			if (!$("#kcm_mark_opened_thre_comp").length &&
+			    !$("#fth_receive_mark_comp").length) {
+				timer_kcm = setTimeout(function() {
+//					if (!$("#fth_receive_mark_comp").length) {
+						console.log("futaba_thread_highlighter : kcm timeout");
+						highlight();
+						pickup_opened_threads();
+//					}
+				}, 3000);
+			}else if (!$("#fth_receive_mark_comp").length) {
+				console.log("futaba_thread_highlighter : kcm already marked");
+				highlight();
+				pickup_opened_threads();
+			}else return;
 		}else {
 			//既読ピックアップ無効のときはハイライト呼び出し
 			highlight();
