@@ -480,6 +480,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 													  $(this).children("small").html() + "</div>");
 				$(this).children("br").replaceWith();
 			}
+			//合間合間にのボタンを削除
+			$(this).children("small.aima_aimani_generated").replaceWith();
 			$(this).replaceWith("<div class='GM_fth_pickuped'>" + $(this).html() + "</div>");
 		});
 		var $pickuped = $(".GM_fth_pickuped");
@@ -522,6 +524,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 																					  $(this).children("small").html() + "</div>");
 					$(this).children("br").replaceWith();
 				}
+				//合間合間にのボタンを削除
+				$(this).children("small.aima_aimani_generated").replaceWith();
 				$(this).replaceWith("<div class='GM_fth_opened'>" + $(this).html() + "</div>");
 			}
 		});
