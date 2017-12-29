@@ -428,19 +428,20 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if( words !== "" ) {
 			removeOldHighlighted();
 			$("body > table[border] td small").each(function(){
-				if( $(this).text().match(re) &&
-                  ( ($(this).parent("td").attr("style") + "").indexOf("display: none;") == -1 ) &&	//合間合間にNGスレ判定追加
-				  ( ($(this).attr("style") + "").indexOf("display: none;") == -1 )) {				//合間合間にNGスレ判定追加
-					if ( !$(this).children(".GM_fth_matchedword").length ) {
-						$(this).html($(this).html().replace(re,
-							"<span class='GM_fth_matchedword'>" +
-							$(this).text().match(re)[0] +
-							"</span>"));
-					}
-					if ( $(this).parent("a").length ) {		//文字スレ
-						$(this).parent().parent("td").addClass("GM_fth_highlighted");
-					} else {
-						$(this).parent("td").addClass("GM_fth_highlighted");
+				if( $(this).text().match(re) ) {
+					if( (($(this).parent("td").attr("style") + "").indexOf("display: none;") == -1 ) &&	//合間合間にNGスレ判定追加
+					    (($(this).attr("style") + "").indexOf("display: none;") == -1 )) {				//合間合間にNGスレ判定追加
+						if ( !$(this).children(".GM_fth_matchedword").length ) {
+							$(this).html($(this).html().replace(re,
+								"<span class='GM_fth_matchedword'>" +
+								$(this).text().match(re)[0] +
+								"</span>"));
+						}
+						if ( $(this).parent("a").length ) {		//文字スレ
+							$(this).parent().parent("td").addClass("GM_fth_highlighted");
+						} else {
+							$(this).parent("td").addClass("GM_fth_highlighted");
+						}
 					}
 				}
 			});
