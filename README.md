@@ -6,12 +6,12 @@
 
 Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/tampermonkey/)を先にインスールしてからスクリプトをインストールして下さい。  
 (GreasemonkeyやViolentmonkeyでの動作は未確認です)  
-ChromeやOperaでの動作は未確認です。既読スレピックアップ機能が動作しないのでオリジナル版の使用を推奨します。  
+Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい。  
 
 ※このUserscriptはFirefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)との併用を推奨しています。  
-[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)にも一応対応しているはずですが、オリジナル版の使用を推奨します。
+[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)でも動作しますが、既読スレピックアップ機能は使用できません。  
 
-※KOSHIANアドオン改変版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
+※その他のUserscriptとKOSHIANアドオン派生版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
 
 ## 使い方
 * ふたばのカタログモードの設定で「文字数」を適当な大きさ(4以上推奨)に設定してください。(板毎に設定が必要です)
@@ -20,7 +20,7 @@ ChromeやOperaでの動作は未確認です。既読スレピックアップ機
 検索ワードは全板共通と各板個別でそれぞれ設定できます。  
 * (rev1)KOSHIAN Catarog Marker kaiとの連携で既読スレをピックアップできます。（デフォルト：有効）
 * (rev1)タブの表示を「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更します。（デフォルト：有効）
-* (rev1)ねないこのNGスレをピックアップしないようにしました。
+* (rev1)[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)のNGスレをピックアップしないようにしました。
 
 ## インストール
 [GreasyFork](https://greasyfork.org/ja/scripts/36639-futaba-thread-highlighter-k)　
@@ -42,6 +42,9 @@ ChromeやOperaでの動作は未確認です。既読スレピックアップ機
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
 
 ## 更新履歴
+* v1.6.6rev4 2017-12-29
+  - 合間合間にのNGスレをピックアップ除外する処理の不具合修正
+  - ピックアップ欄のスレから合間合間にのボタンを削除
 * v1.6.6rev3 2017-12-24
   - マーク監視開始前にマーク完了が来た時の処理を変更
 * v1.6.6rev2 2017-12-24
@@ -49,7 +52,7 @@ ChromeやOperaでの動作は未確認です。既読スレピックアップ機
 * v1.6.6rev1 2017-12-23
   - KOSHIAN Catarog Marker kaiとの連携で既読スレのピックアップ機能を追加
   - 板名＋ソート名をタブに表示する機能を追加
-  - ねないこのNGスレをピックアップしないように変更
+  - 合間合間にのNGスレをピックアップしないように変更
 
 ***
 

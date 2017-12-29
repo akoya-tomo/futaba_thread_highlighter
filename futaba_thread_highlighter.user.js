@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev3
+// @version     1.6.6rev4
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -428,19 +428,20 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if( words !== "" ) {
 			removeOldHighlighted();
 			$("body > table[border] td small").each(function(){
-				if( $(this).text().match(re) &&
-                  ( $(this).parent("td").attr("style") != "display: none;" ) &&	//ねないこNGスレ判定追加
-				  ( $(this).attr("style") != "display: none;" )) {				//ねないこNGスレ判定追加
-					if ( !$(this).children(".GM_fth_matchedword").length ) {
-						$(this).html($(this).html().replace(re,
-							"<span class='GM_fth_matchedword'>" +
-							$(this).text().match(re)[0] +
-							"</span>"));
-					}
-					if ( $(this).parent("a").length ) {		//文字スレ
-						$(this).parent().parent("td").addClass("GM_fth_highlighted");
-					} else {
-						$(this).parent("td").addClass("GM_fth_highlighted");
+				if( $(this).text().match(re) ) {
+					if( (($(this).parent("td").attr("style") + "").indexOf("display: none;") == -1 ) &&	//合間合間にNGスレ判定追加
+					    (($(this).attr("style") + "").indexOf("display: none;") == -1 )) {				//合間合間にNGスレ判定追加
+						if ( !$(this).children(".GM_fth_matchedword").length ) {
+							$(this).html($(this).html().replace(re,
+								"<span class='GM_fth_matchedword'>" +
+								$(this).text().match(re)[0] +
+								"</span>"));
+						}
+						if ( $(this).parent("a").length ) {		//文字スレ
+							$(this).parent().parent("td").addClass("GM_fth_highlighted");
+						} else {
+							$(this).parent("td").addClass("GM_fth_highlighted");
+						}
 					}
 				}
 			});
@@ -480,6 +481,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 													  $(this).children("small").html() + "</div>");
 				$(this).children("br").replaceWith();
 			}
+			//合間合間にのボタンを削除
+			$(this).children("small.aima_aimani_generated").replaceWith();
 			$(this).replaceWith("<div class='GM_fth_pickuped'>" + $(this).html() + "</div>");
 		});
 		var $pickuped = $(".GM_fth_pickuped");
@@ -499,8 +502,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_opened").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
-		//ピックアップ済みは除外
-		var kcm_opened = $("body > table td[class = 'GM_kcm_opened'][class != 'GM_fth_pickuped']").clone();
+		//合間合間にNGスレ（スレを無かった事にする設定）とピックアップ済みは除外
+		var kcm_opened = $("body > table td:not([style *= 'display: none;'])[class = 'GM_kcm_opened'][class != 'GM_fth_pickuped']").clone();
 		//KOSHIAN_CATALOG_MARKER_STYLEが未設定ならマークされたスタイルをコピー
 		if (kcm_opened.length && !openedThreadCssText) {
 			openedThreadCssText = kcm_opened.get(0).style.cssText;
@@ -510,15 +513,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		$("#GM_fth_highlighted_threads").append(kcm_opened);
 		//要素の中身を整形
 		kcm_opened.each(function(){
-			if ( !$(this).children("small").length ) {		//文字スレ
-				//console.log($(this).children("a").html());
-				//$(this).children("a").replaceWith("<div class='GM_fth_opened_caption'>" + $(this).html() + "</div>");
+			//合間合間にNGスレは除去
+			if ( $(this).find("small[style *= 'display: none;']").length ) {
+				$(this).remove();
 			} else {
-				$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_opened_caption'>" +
-													  $(this).children("small").html() + "</div>");
-				$(this).children("br").replaceWith();
+				if ( !$(this).children("small").length ) {		//文字スレ
+					//console.log($(this).children("a").html());
+					//$(this).children("a").replaceWith("<div class='GM_fth_opened_caption'>" + $(this).html() + "</div>");
+				} else {
+					$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_opened_caption'>" +
+																					  $(this).children("small").html() + "</div>");
+					$(this).children("br").replaceWith();
+				}
+				//合間合間にのボタンを削除
+				$(this).children("small.aima_aimani_generated").replaceWith();
+				$(this).replaceWith("<div class='GM_fth_opened'>" + $(this).html() + "</div>");
 			}
-			$(this).replaceWith("<div class='GM_fth_opened'>" + $(this).html() + "</div>");
 		});
 		var $fth_opened = $(".GM_fth_opened");
 		$fth_opened.each(function(){
