@@ -23,6 +23,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_BOARD_NAME = true;					//タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する
 	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する
 	var OPENED_THREAD_MARKER_STYLE = "";		//開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
+	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたクロの検索バーを隠した状態でカタログを開く
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
@@ -33,6 +34,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var selectName = $("body > b > a").text();
 	var opacityZero = false;
 	var openedThreadObserver;
+	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
 
 	init();
 
@@ -46,6 +48,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setStyle();
 		makecontainer();
 		makeConfigUI();
+		futakuroSearchBarDispCtrl();
 		highlight();
 		pickup_opened_threads();
 		check_akahuku_reload();
@@ -323,6 +326,53 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 		var example = randwords.join("|");
 		$("#GM_fth_example").text(example);
+	}
+
+	/*
+	 *ふたクロの検索バーの表示制御
+	 */
+	function futakuroSearchBarDispCtrl() {
+		if (!$("#inputSearch").length) return;
+		$("#inputSearch,#inputSearch+div").wrapAll("<div class='fth_futakuro_searchbar'>");
+		var $futakuro_searchbar_button_header = $("<span>", {
+			id: "GM_fth_futakuro_searchbar_button_header",
+			text: "　検索バー",
+			css: {
+				"background-color": "#F0E0D6",
+				fontWeight: "bolder"
+			}
+		});
+		$("#GM_fth_container_header").append($futakuro_searchbar_button_header);
+		var $futakuro_searchbar_button = $("<span>", {
+			id: "GM_fth_futakuro_searchbar_button",
+			text: "[表示]",
+			css: {
+				cursor: "pointer",
+			},
+			click: function() {
+				switchSearchbarDisp(true);
+			}
+		});
+		$futakuro_searchbar_button.hover(function () {
+			$(this).css({ backgroundColor:"#EEAA88" });
+		}, function () {
+			$(this).css({ backgroundColor:"#F0E0D6" });
+		});
+		$("#GM_fth_container_header").append($futakuro_searchbar_button);
+		switchSearchbarDisp();
+
+		function switchSearchbarDisp(button) {
+			if (button) {
+				hideFutakuroSearchBar = !hideFutakuroSearchBar;
+			}
+			if (hideFutakuroSearchBar) {
+				$(".fth_futakuro_searchbar").slideUp("fast");
+				$("#GM_fth_futakuro_searchbar_button").text("[表示]");
+			} else {
+				$(".fth_futakuro_searchbar").slideDown("fast");
+				$("#GM_fth_futakuro_searchbar_button").text("[隠す]");
+			}
+		}
 	}
 
 	/*
