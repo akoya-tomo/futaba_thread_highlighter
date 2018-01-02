@@ -1,15 +1,15 @@
 ## futaba thread highlighter K
 このUserscriptは[himuro\_majika](https://github.com/himuro-majika)氏の[futaba thread highlighter](https://github.com/himuro-majika/futaba_thread_highlighter)を改変したものです。  
 ふたば☆ちゃんねるのカタログに現在表示されているすべてのスレ本文の文字列を監視してページトップに一覧表示します。  
-一度検索ワードを設定しておけば定時スレ等が探しやすくなります。  
-またFirefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)との連携で既読スレのピックアップもできます。
+一度検索ワードを設定しておけば定時スレ等が探しやすくなります。検索ワードには正規表現が利用できるのでより柔軟にピックアップできます。  
+また既読スレをマークできるアドオンとの連携でカタログ内の既読スレのピックアップも可能です。  
 
 Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/tampermonkey/)を先にインスールしてからスクリプトをインストールして下さい。  
 (GreasemonkeyやViolentmonkeyでの動作は未確認です)  
 Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい。  
 
-※このUserscriptはFirefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)との併用を推奨しています。  
-[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)と[ふたクロ](http://futakuro.com/)でも動作しますが、既読スレピックアップ機能は使用できません。  
+※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN 開いたスレをカタログにマーク](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)・[KOSHIAN Catalog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
+（rev5からKOSHIAN Catalog Marker kai以外のアドオンでも既読スレピックアップが可能になりました）
 
 ※その他のUserscriptとKOSHIANアドオン派生版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
 
@@ -18,9 +18,11 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 * スレッド検索該当スレッドの[設定]ボタンをクリックして監視したい検索ワードを入力してください。
 |で区切ると複数の語句を指定できます。(正規表現使用可。特殊な記号　\\*?+.^$|()[]{}　は全て正規表現のメタキャラクタとして認識されます。)  
 検索ワードは全板共通と各板個別でそれぞれ設定できます。  
-* (rev1)KOSHIAN Catarog Marker kaiとの連携で既読スレをピックアップできます。（デフォルト：有効）
-* (rev1)タブの表示を「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更します。（デフォルト：有効）
-* (rev1)[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)のNGスレをピックアップしないようにしました。
+* (rev5)既読スレをマークできるアドオンとの連携でカタログ内の既読スレもピックアップされます。（デフォルト：有効）
+* (rev1)タブの表示が「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更されます。（デフォルト：有効）
+* (rev5)検索ワードに該当したスレや既読スレでも、ふたクロや[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)でNGにして消すとピックアップされなくなります。  
+* (rev5)ふたクロの検索バーが隠れた状態でカタログが開きます。（デフォルト：有効）  
+  - 検索バー\[表示\]ボタンをクリックすることで隠れていた検索バーが出現します。  
 
 ## インストール
 [GreasyFork](https://greasyfork.org/ja/scripts/36639-futaba-thread-highlighter-k)　
@@ -30,18 +32,24 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 ## 設定
 機能の動作はスクリプト冒頭の大文字変数をエディタで編集すれば変更することができます。  
 
-* USE\_BOARD\_NAME:タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する\(*true*\)  
-* USE\_PICKUP\_OPENED\_THREAD:既読ピックアップ機能を使用する（要KOSHIAN Catalog Marker kai v1.1以上）\(*true*\)  
-* KOSHIAN\_CATALOG\_MARKER\_STYLE:既読マークのスタイル\(*""*\)  
-  - 通常はKOSHIAN Catalog Marker kaiアドオンがマークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。
+* USE\_BOARD\_NAME:タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する \(*true*\)  
+* USE\_PICKUP\_OPENED\_THREAD:既読ピックアップ機能を使用する ~~（要KOSHIAN Catalog Marker kai v1.1以上）~~  \(*true*\)  
+  [KOSHIAN Catalog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)の他に[KOSHIAN 開いたスレをカタログにマーク](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)・[ふたクロ](http://futakuro.com/)でも動作します。
+* OPENED\_THREAD\_MARKER\_STYLE:既読マークのスタイル \(*""*\)  
+（rev5から変数名変更　旧名称：KOSHIAN\_CATALOG\_MARKER\_STYLE）
+  - 通常はアドオンが既読マークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。また赤福ではマークのスタイルがコピーできないため、変数横のコメントを参考にスタイルを設定して下さい。  
+* HIDE\_FUTAKURO\_SEARCHBAR:ふたクロの検索バーを隠した状態でカタログを開く \(*true*\)  
 
 ## 注意事項
-* Firefoxアドオン[KOSHIAN Catarog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)は必ず**v1.1以上**をインストールしてください。  
-（[AMO](https://addons.mozilla.org/ja/firefox/)にあるPachira氏のKOSHIAN 開いたスレをカタログにマークアドオンとは異なるのでご注意下さい）
+* ~~FirefoxアドオンKOSHIAN Catalog Marker kaiは必ず**v1.1以上**をインストールしてください。~~  
+（rev5から既読ピックアップの方式の変更によりバージョンの制限は無くなりました）  
 * 既読スレのピックアップをしない（できない）場合はスクリプト内の設定USE\_PICKUP\_OPENED\_THREADをfalseにしてください。
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
 
 ## 更新履歴
+* v1.6.6rev5 2018-01-02
+  - KOSHIAN Catalog Marker kai以外のアドオンでも既読スレのピックアップが動作するように変更
+  - ふたクロの検索バーを隠した状態でカタログを開く機能を追加
 * v1.6.6rev4 2017-12-29
   - 合間合間にのNGスレをピックアップ除外する処理の不具合修正
   - ピックアップ欄のスレから合間合間にのボタンを削除
