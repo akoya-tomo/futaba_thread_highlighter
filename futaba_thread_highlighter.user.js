@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev4
+// @version     1.6.6rev5
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -21,24 +21,20 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 *	設定
 	 */
 	var USE_BOARD_NAME = true;					//タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する
-	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する（要KOSHIAN Catalog Marker Kai v1.1+）
-	var KOSHIAN_CATALOG_MARKER_STYLE = "";		//KOSHIAN Catalog Markerの「開いたスレのスタイル」設定
+	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する
+	var OPENED_THREAD_MARKER_STYLE = "";		//開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
+	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたクロの検索バーを隠した状態でカタログを開く
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
 	var serverFullPath = serverName + "_" + pathName;
 	var akahukuloadstat;
-	var openedThreadCssText = KOSHIAN_CATALOG_MARKER_STYLE;
-	var pickupedOpenedThreadCss =
-			//ピックアップ既読スレスタイル
-			"  max-width: 250px;" +
-			"  min-width: 70px;" +
-			"  margin: 1px;" +
-			"  border-radius: 5px;" +
-			"  word-wrap: break-word;";
+	var openedThreadCssText = OPENED_THREAD_MARKER_STYLE;
 	var boardName = $("#tit").text().match(/^[^＠]+/);
 	var selectName = $("body > b > a").text();
-	var timer_kcm;
+	var opacityZero = false;
+	var openedThreadObserver;
+	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
 
 	init();
 
@@ -52,10 +48,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setStyle();
 		makecontainer();
 		makeConfigUI();
-		//check_timeout内でhighlight呼び出しに変更
-//		highlight();
+		futakuroSearchBarDispCtrl();
+		highlight();
+		pickup_opened_threads();
 		check_akahuku_reload();
-		check_timeout();
+		check_opened_threads_mark();
 	}
 
 	/*
@@ -112,6 +109,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setIndivValue(input_indiv);
 		$("#GM_fth_config_container").fadeOut(100);
 		highlight(true);
+		if (USE_PICKUP_OPENED_THREAD) {
+			pickup_opened_threads();
+		}
 		/*
 		 * 板毎の個別検索ワードを保存
 		 */
@@ -329,22 +329,78 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 
 	/*
+	 *ふたクロの検索バーの表示制御
+	 */
+	function futakuroSearchBarDispCtrl() {
+		if (!$("#inputSearch").length) return;
+		$("#inputSearch,#inputSearch+div").wrapAll("<div class='fth_futakuro_searchbar'>");
+		var $futakuro_searchbar_button_header = $("<span>", {
+			id: "GM_fth_futakuro_searchbar_button_header",
+			text: "　検索バー",
+			css: {
+				"background-color": "#F0E0D6",
+				fontWeight: "bolder"
+			}
+		});
+		$("#GM_fth_container_header").append($futakuro_searchbar_button_header);
+		var $futakuro_searchbar_button = $("<span>", {
+			id: "GM_fth_futakuro_searchbar_button",
+			text: "[表示]",
+			css: {
+				cursor: "pointer",
+			},
+			click: function() {
+				switchSearchbarDisp(true);
+			}
+		});
+		$futakuro_searchbar_button.hover(function () {
+			$(this).css({ backgroundColor:"#EEAA88" });
+		}, function () {
+			$(this).css({ backgroundColor:"#F0E0D6" });
+		});
+		$("#GM_fth_container_header").append($futakuro_searchbar_button);
+		switchSearchbarDisp();
+
+		function switchSearchbarDisp(button) {
+			if (button) {
+				hideFutakuroSearchBar = !hideFutakuroSearchBar;
+			}
+			if (hideFutakuroSearchBar) {
+				$(".fth_futakuro_searchbar").slideUp("fast");
+				$("#GM_fth_futakuro_searchbar_button").text("[表示]");
+			} else {
+				$(".fth_futakuro_searchbar").slideDown("fast");
+				$("#GM_fth_futakuro_searchbar_button").text("[隠す]");
+			}
+		}
+	}
+
+	/*
 	 *赤福の動的リロードの状態を取得
 	 */
 	function check_akahuku_reload() {
 		var target = $("html > body").get(0);
+		var config = { childList: true };
 		if ($("#cat_search").length) {
 			// ふたクロ
 			highlight();
 			target = $("html > body > table[border]").get(0);
+			config = { attributes: true , attributeFilter: ['style'] };
 		}
 		var observer = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				var nodes = $(mutation.addedNodes);
 				if ($("#cat_search").length) {
 					// ふたクロ
-					if (nodes.length) {
+					if (mutation.target.attributes.style.nodeValue == "opacity: 0;") {
+						opacityZero = true;
+					} else if (opacityZero) {
+						opacityZero = false;
 						highlight();
+						if (USE_PICKUP_OPENED_THREAD) {
+							pickup_opened_threads();
+							check_opened_threads_mark();
+						}
 					}
 				}
 				else if (nodes.attr("border") == "1") {
@@ -353,49 +409,53 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						if(status === "" || status == "完了しました") {
 							clearInterval(timer);
 							highlight();
+							if (USE_PICKUP_OPENED_THREAD) {
+								pickup_opened_threads();
+								check_opened_threads_mark();
+							}
 						}
 					}, 10);
 				}
-				//カタログでマークされたことを検出
-				else if (nodes.length && USE_PICKUP_OPENED_THREAD) {
-					if (nodes[0].id == "kcm_mark_opened_thre_comp") {
-						nodes[0].id = "fth_receive_mark_comp";
-						clearTimeout(timer_kcm);
-						highlight();
-						pickup_opened_threads();
-					}
-					else if (nodes[0].id == "kcm_mark_thre_comp") {
-						nodes.remove();
-						pickup_opened_threads();
-					}
-				}
 			});
 		});
-		observer.observe(target, { childList: true });
+		observer.observe(target, config);
 	}
 
 	/*
-	 *KOSHIAN CatalogMarkerKaiマーク完了応答時間切れ確認
+	 *既読スレのマークの状態を取得
 	 */
-	function check_timeout() {
-		if (USE_PICKUP_OPENED_THREAD) {
-			if (!$("#kcm_mark_opened_thre_comp").length &&
-			    !$("#fth_receive_mark_comp").length) {
-				timer_kcm = setTimeout(function() {
-//					if (!$("#fth_receive_mark_comp").length) {
-						console.log("futaba_thread_highlighter : kcm timeout");
+	function check_opened_threads_mark() {
+		if (!USE_PICKUP_OPENED_THREAD) return;
+		var target = $("html > body table[border] td");
+		var config = { attributes: true , attributeFilter: ['style'] };
+		if ($(".akahuku_markup_catalog_table").length) {
+			//赤福の既読マーク
+            target = $("html > body table[border] td a[style]");
+			config = { attributes: true , attributeFilter: ['class'] };
+		}
+		//オブザーバインスタンスが既にあれば事前に解除する
+		if (openedThreadObserver) openedThreadObserver.disconnect();
+		openedThreadObserver = new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutation) {
+//				console.log("futaba_thread_highlighter : target mutated");
+				var timerMutated;
+				if (!$(".akahuku_markup_catalog_table").length) {
+					//赤福以外
+					timerMutated = setTimeout(function() {
 						highlight();
 						pickup_opened_threads();
-//					}
-				}, 3000);
-			}else if (!$("#fth_receive_mark_comp").length) {
-				console.log("futaba_thread_highlighter : kcm already marked");
-				highlight();
-				pickup_opened_threads();
-			}else return;
-		}else {
-			//既読ピックアップ無効のときはハイライト呼び出し
-			highlight();
+					}, 200);
+				} else if (mutation.target.className == "akahuku_visited") {
+					//赤福の既読マーク
+					timerMutated = setTimeout(function() {
+						$(mutation.target).parent("td").css("background-image","none");	//ダミーのスタイルを設定（既読ピックアップ用マーク）
+						pickup_opened_threads();
+					}, 200);
+				}
+			});
+		});
+		for (var i = 0; i < target.length; i++) {
+			openedThreadObserver.observe(target[i], config);
 		}
 	}
 
@@ -429,8 +489,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			removeOldHighlighted();
 			$("body > table[border] td small").each(function(){
 				if( $(this).text().match(re) ) {
-					if( (($(this).parent("td").attr("style") + "").indexOf("display: none;") == -1 ) &&	//合間合間にNGスレ判定追加
-					    (($(this).attr("style") + "").indexOf("display: none;") == -1 )) {				//合間合間にNGスレ判定追加
+					if( (($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	//合間合間にNGスレ判定追加
+					    (($(this).attr("style") + "").indexOf("display: none") == -1 )) {				//合間合間にNGスレ判定追加
 						if ( !$(this).children(".GM_fth_matchedword").length ) {
 							$(this).html($(this).html().replace(re,
 								"<span class='GM_fth_matchedword'>" +
@@ -469,21 +529,26 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_pickuped").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_pickuped").remove();
 		}
-		var highlighted = $("body > table .GM_fth_highlighted").clone();
+		var highlighted = $("body > table .GM_fth_highlighted:not([style *= 'display: none'])").clone();
 		$("#GM_fth_highlighted_threads").append(highlighted);
 		//要素の中身を整形
 		highlighted.each(function(){
-			if ( !$(this).children("small").length ) {		//文字スレ
-				//console.log($(this).children("a").html());
-				//$(this).children("a").replaceWith("<div class='GM_fth_pickuped_caption'>" + $(this).html() + "</div>");
+			//NGスレは除去
+			if ( $(this).find("small[style *= 'display: none']").length ) {
+				$(this).remove();
 			} else {
-				$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_pickuped_caption'>" +
-													  $(this).children("small").html() + "</div>");
-				$(this).children("br").replaceWith();
+				if ( !$(this).children("small").length ) {		//文字スレ
+					//console.log($(this).children("a").html());
+					//$(this).children("a").replaceWith("<div class='GM_fth_pickuped_caption'>" + $(this).html() + "</div>");
+				} else {
+					$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_pickuped_caption'>" +
+														  $(this).children("small").html() + "</div>");
+					$(this).children("br").replaceWith();
+				}
+				//合間合間にのボタンを削除
+				$(this).children("small.aima_aimani_generated").replaceWith();
+				$(this).replaceWith("<div class='GM_fth_pickuped'>" + $(this).html() + "</div>");
 			}
-			//合間合間にのボタンを削除
-			$(this).children("small.aima_aimani_generated").replaceWith();
-			$(this).replaceWith("<div class='GM_fth_pickuped'>" + $(this).html() + "</div>");
 		});
 		var $pickuped = $(".GM_fth_pickuped");
 		$pickuped.each(function(){
@@ -499,22 +564,24 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 *既読スレを先頭にピックアップ
 	 */
 	function pickup_opened_threads() {
+		if (!USE_PICKUP_OPENED_THREAD) return;
+
 		if ( $("#GM_fth_highlighted_threads .GM_fth_opened").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
-		//合間合間にNGスレ（スレを無かった事にする設定）とピックアップ済みは除外
-		var kcm_opened = $("body > table td:not([style *= 'display: none;'])[class = 'GM_kcm_opened'][class != 'GM_fth_pickuped']").clone();
-		//KOSHIAN_CATALOG_MARKER_STYLEが未設定ならマークされたスタイルをコピー
-		if (kcm_opened.length && !openedThreadCssText) {
-			openedThreadCssText = kcm_opened.get(0).style.cssText;
+		//NGスレとピックアップ済みは除外
+		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[class *= 'GM_fth_highlighted'])").clone();
+		//OPENED_THREAD_MARKER_STYLEが未設定ならマークされたスタイルをコピー
+		if (opened.length && !openedThreadCssText) {
+			openedThreadCssText = opened.get(0).style.cssText;
 			setOpenedThreadStyle();
 		}
 
-		$("#GM_fth_highlighted_threads").append(kcm_opened);
+		$("#GM_fth_highlighted_threads").append(opened);
 		//要素の中身を整形
-		kcm_opened.each(function(){
-			//合間合間にNGスレは除去
-			if ( $(this).find("small[style *= 'display: none;']").length ) {
+		opened.each(function(){
+			//NGスレは除去
+			if ( $(this).find("small[style *= 'display: none']").length ) {
 				$(this).remove();
 			} else {
 				if ( !$(this).children("small").length ) {		//文字スレ
@@ -568,13 +635,17 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"  background-color: #ffdfe9;" +
 			"}" +
 			//既読セル
-			//KOSHIAN Catarog Markerでマークするので未設定
+			//外部でマークするので未設定
 //			".GM_kcm_opened {" +
 //			   openedThreadCssText +
 //			"}" +
 			//ピックアップ既読スレ
 			".GM_fth_opened {" +
-			   pickupedOpenedThreadCss +
+			"  max-width: 250px;" +
+			"  min-width: 70px;" +
+			"  margin: 1px;" +
+			"  border-radius: 5px;" +
+			"  word-wrap: break-word;" +
 			   openedThreadCssText +
 			"}" +
 			//ピックアップ既読スレ本文
@@ -590,8 +661,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	function setOpenedThreadStyle() {
 		var openedThreadCss =
 			".GM_fth_opened {" +
-			   pickupedOpenedThreadCss +
-			   openedThreadCssText + ";" +
+			   openedThreadCssText +
 			"}";
 		GM_addStyle(openedThreadCss);
 	}
