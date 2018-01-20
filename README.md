@@ -21,8 +21,8 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 * (rev5)既読スレをマークできるアドオンとの連携でカタログ内の既読スレもピックアップされます。（デフォルト：有効）
 * (rev1)タブの表示が「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更されます。（デフォルト：有効）
 * (rev5)検索ワードに該当したスレや既読スレでも、ふたクロや[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)でNGにして消すとピックアップされなくなります。  
-* (rev5)ふたクロの検索バーが隠れた状態でカタログが開きます。（デフォルト：有効）  
-  - 検索バー\[表示\]ボタンをクリックすることで隠れていた検索バーが出現します。  
+* (rev5)[ふたば@アプリ としあき\(仮\) 出張版](https://chrome.google.com/webstore/detail/%E3%81%B5%E3%81%9F%E3%81%B0%E3%82%A2%E3%83%97%E3%83%AA-%E3%81%A8%E3%81%97%E3%81%82%E3%81%8D%E4%BB%AE-%E5%87%BA%E5%BC%B5%E7%89%88/nhiegnhgjieegcgdkbneigigmpijbnhe)のキーワード検索が隠れた状態でカタログが開きます。（デフォルト：有効）  
+  - 検索バー\[表示\]ボタンをクリックすることで隠れていたキーワード検索バーが出現します。  
 
 ## インストール
 [GreasyFork](https://greasyfork.org/ja/scripts/36639-futaba-thread-highlighter-k)　
@@ -38,7 +38,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 * OPENED\_THREAD\_MARKER\_STYLE:既読マークのスタイル \(*""*\)  
 （rev5から変数名変更　旧名称：KOSHIAN\_CATALOG\_MARKER\_STYLE）
   - 通常はアドオンが既読マークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。また赤福ではマークのスタイルがコピーできないため、変数横のコメントを参考にスタイルを設定して下さい。  
-* HIDE\_FUTAKURO\_SEARCHBAR:ふたクロの検索バーを隠した状態でカタログを開く \(*true*\)  
+* HIDE\_FUTAKURO\_SEARCHBAR:ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を隠した状態でカタログを開く \(*true*\)  
 
 ## 注意事項
 * ~~FirefoxアドオンKOSHIAN Catalog Marker kaiは必ず**v1.1以上**をインストールしてください。~~  
@@ -49,7 +49,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 ## 更新履歴
 * v1.6.6rev5 2018-01-02
   - KOSHIAN Catalog Marker kai以外のアドオンでも既読スレのピックアップが動作するように変更
-  - ふたクロの検索バーを隠した状態でカタログを開く機能を追加
+  - ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を隠した状態でカタログを開く機能を追加
 * v1.6.6rev4 2017-12-29
   - 合間合間にのNGスレをピックアップ除外する処理の不具合修正
   - ピックアップ欄のスレから合間合間にのボタンを削除
