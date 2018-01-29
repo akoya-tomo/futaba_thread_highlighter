@@ -18,11 +18,13 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 * スレッド検索該当スレッドの[設定]ボタンをクリックして監視したい検索ワードを入力してください。
 |で区切ると複数の語句を指定できます。(正規表現使用可。特殊な記号　\\*?+.^$|()[]{}　は全て正規表現のメタキャラクタとして認識されます。)  
 検索ワードは全板共通と各板個別でそれぞれ設定できます。  
-* (rev5)既読スレをマークできるアドオンとの連携でカタログ内の既読スレもピックアップされます。（デフォルト：有効）
-* (rev1)タブの表示が「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更されます。（デフォルト：有効）
-* (rev5)検索ワードに該当したスレや既読スレでも、ふたクロや[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)でNGにして消すとピックアップされなくなります。  
-* (rev5)[ふたば@アプリ としあき\(仮\) 出張版](https://chrome.google.com/webstore/detail/%E3%81%B5%E3%81%9F%E3%81%B0%E3%82%A2%E3%83%97%E3%83%AA-%E3%81%A8%E3%81%97%E3%81%82%E3%81%8D%E4%BB%AE-%E5%87%BA%E5%BC%B5%E7%89%88/nhiegnhgjieegcgdkbneigigmpijbnhe)のキーワード検索が隠れた状態でカタログが開きます。（デフォルト：有効）  
+* 既読スレをマークできるアドオンとの連携でカタログ内の既読スレもピックアップされます。（デフォルト：有効）
+* タブの表示が「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更されます。（デフォルト：有効）
+* 検索ワードに該当したスレや既読スレでも、ふたクロや[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)でNGにして消すとピックアップされなくなります。  
+* [ふたば@アプリ としあき\(仮\) 出張版](https://chrome.google.com/webstore/detail/%E3%81%B5%E3%81%9F%E3%81%B0%E3%82%A2%E3%83%97%E3%83%AA-%E3%81%A8%E3%81%97%E3%81%82%E3%81%8D%E4%BB%AE-%E5%87%BA%E5%BC%B5%E7%89%88/nhiegnhgjieegcgdkbneigigmpijbnhe)のキーワード検索が隠れた状態でカタログが開きます。（デフォルト：有効）  
   - 検索バー\[表示\]ボタンをクリックすることで隠れていたキーワード検索バーが出現します。  
+* \(new\) [futaba catalog NG](https://github.com/akoya-tomo/futaba_catalog_NG/)との連携機能追加
+  - メニューバーを同じ行で表示したり、NGにしたスレをピックアップ対象外にします。
 
 ## インストール
 [GreasyFork](https://greasyfork.org/ja/scripts/36639-futaba-thread-highlighter-k)　
