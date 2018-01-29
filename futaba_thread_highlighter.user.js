@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev5
+// @version     1.6.6rev6
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -23,7 +23,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_BOARD_NAME = true;					//タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する
 	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する
 	var OPENED_THREAD_MARKER_STYLE = "";		//開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
-	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたクロの検索バーを隠した状態でカタログを開く
+	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたば@アプリ としあき(仮) 出張版のキーワード検索バーを隠した状態でカタログを開く
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
@@ -132,19 +132,27 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function makecontainer() {
 		var $pickup_thread_area = $("<div>", {
-			id: "GM_fth_container"
+			id: "GM_fth_container",
+			css: {
+				"background-color": "#F0E0D6",
+			}
 		});
-		$("body > table[border]").before($pickup_thread_area);
+		if ($("#GM_fcn_ng_menubar").length) {
+			$pickup_thread_area = $("#GM_fcn_ng_menubar");
+		} else {
+			$("body > table[border]").before($pickup_thread_area);
+		}
 
-		var $container_header = $("<div>", {
+		var $container_header = $("<span>", {
 			id: "GM_fth_container_header",
 			text: "スレッド検索該当スレッド",
 			css: {
 				"background-color": "#F0E0D6",
-				fontWeight: "bolder"
+				fontWeight: "bolder",
+				"padding-right": "16px"
 			}
 		});
-		$pickup_thread_area.append($container_header);
+		$pickup_thread_area.prepend($container_header);
 		//設定ボタン
 		var $button = $("<span>", {
 			id: "GM_fth_searchword",
@@ -168,9 +176,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			css: {
 				"display": "flex",
 				"flex-wrap": "wrap",
+				"background-color": "",
 			}
 		});
-		$pickup_thread_area.append($pickup_thread_container);
+		$pickup_thread_area.after($pickup_thread_container);
 	}
 
 	/*
@@ -329,7 +338,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 
 	/*
-	 *ふたクロの検索バーの表示制御
+	 *ふたば@アプリ としあき(仮) 出張版のキーワード検索バーの表示制御
 	 */
 	function futakuroSearchBarDispCtrl() {
 		if (!$("#inputSearch").length) return;
@@ -529,7 +538,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_pickuped").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_pickuped").remove();
 		}
-		var highlighted = $("body > table .GM_fth_highlighted:not([style *= 'display: none'])").clone();
+		var highlighted = $("body > table .GM_fth_highlighted:not([style *= 'display: none'],[class *= 'GM_fcn_ng_'])").clone();
 		$("#GM_fth_highlighted_threads").append(highlighted);
 		//要素の中身を整形
 		highlighted.each(function(){
@@ -570,7 +579,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
 		//NGスレとピックアップ済みは除外
-		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[class *= 'GM_fth_highlighted'])").clone();
+		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
 		//OPENED_THREAD_MARKER_STYLEが未設定ならマークされたスタイルをコピー
 		if (opened.length && !openedThreadCssText) {
 			openedThreadCssText = opened.get(0).style.cssText;
