@@ -49,6 +49,8 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
 
 ## 更新履歴
+* v1.6.6rev7 2018-02-24
+  - 既読スレのピックアップ条件を修正
 * v1.6.6rev6 2018-01-30
   - futaba catalog NGとの連携機能追加
 * v1.6.6rev5 2018-01-02

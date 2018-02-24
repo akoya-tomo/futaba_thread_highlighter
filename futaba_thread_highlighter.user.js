@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev6
+// @version     1.6.6rev7
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -579,7 +579,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
 		//NGスレとピックアップ済みは除外
-		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
+		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[style = ''],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
 		//OPENED_THREAD_MARKER_STYLEが未設定ならマークされたスタイルをコピー
 		if (opened.length && !openedThreadCssText) {
 			openedThreadCssText = opened.get(0).style.cssText;
