@@ -579,7 +579,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
 		//NGスレとピックアップ済みは除外
-		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
+		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[style = ''],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
 		//OPENED_THREAD_MARKER_STYLEが未設定ならマークされたスタイルをコピー
 		if (opened.length && !openedThreadCssText) {
 			openedThreadCssText = opened.get(0).style.cssText;
