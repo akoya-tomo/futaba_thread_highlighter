@@ -11,7 +11,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 ※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN 開いたスレをカタログにマーク](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)・[KOSHIAN Catalog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
 （rev5からKOSHIAN Catalog Marker kai以外のアドオンでも既読スレピックアップが可能になりました）
 
-※その他のUserscriptとKOSHIANアドオン派生版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
+※その他のUserscriptとFirefoxアドオンKOSHIANの改変版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
 
 ## 使い方
 * ふたばのカタログモードの設定で「文字数」を適当な大きさ(4以上推奨)に設定してください。(板毎に設定が必要です)
