@@ -440,14 +440,14 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		var config = { attributes: true , attributeFilter: ['style'] };
 		if ($(".akahuku_markup_catalog_table").length) {
 			//赤福の既読マーク
-            target = $("html > body table[border] td a[style]");
+			target = $("html > body table[border] td a[style]");
 			config = { attributes: true , attributeFilter: ['class'] };
 		}
 		//オブザーバインスタンスが既にあれば事前に解除する
 		if (openedThreadObserver) openedThreadObserver.disconnect();
 		openedThreadObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
-//				console.log("futaba_thread_highlighter : target mutated");
+				//console.log("futaba_thread_highlighter : target mutated");
 				var timerMutated;
 				if (!$(".akahuku_markup_catalog_table").length) {
 					//赤福以外
@@ -500,7 +500,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$("body > table[border] td small").each(function(){
 				if( $(this).text().match(re) ) {
 					if( (($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	//合間合間にNGスレ判定追加
-					    (($(this).attr("style") + "").indexOf("display: none") == -1 )) {				//合間合間にNGスレ判定追加
+						(($(this).attr("style") + "").indexOf("display: none") == -1 )) {				//合間合間にNGスレ判定追加
 						if ( !$(this).children(".GM_fth_matchedword").length ) {
 							$(this).html($(this).html().replace(re,
 								"<span class='GM_fth_matchedword'>" +
@@ -617,7 +617,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		});
 	}
 
-	 /*
+	/*
 	 *スタイル設定
 	 */
 	function setStyle() {
@@ -646,9 +646,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"}" +
 			//既読セル
 			//外部でマークするので未設定
-//			".GM_kcm_opened {" +
-//			   openedThreadCssText +
-//			"}" +
+			//".GM_kcm_opened {" +
+			//   openedThreadCssText +
+			//"}" +
 			//ピックアップ既読スレ
 			".GM_fth_opened {" +
 			"  max-width: 250px;" +
@@ -725,7 +725,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if(boardName == "二次元裏"){
 				boardName = serverName;
 			}
-			document.title = boardName + ' ' + selectName;
+			document.title = boardName + " " + selectName;
 		}
 	}
 
