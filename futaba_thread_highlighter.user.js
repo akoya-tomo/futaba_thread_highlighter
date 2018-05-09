@@ -24,7 +24,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する
 	var OPENED_THREAD_MARKER_STYLE = "";		//開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
 	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたば@アプリ としあき(仮) 出張版のキーワード検索バーを隠した状態でカタログを開く
-	var USE_FUTABA_CATALOG_MOD = true;			//futaba catalog modを使用する
+	var USE_FUTABA_CATALOG_MOD = false;			//futaba catalog modを使用する
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
