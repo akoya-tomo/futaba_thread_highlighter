@@ -24,6 +24,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する
 	var OPENED_THREAD_MARKER_STYLE = "";		//開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
 	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたば@アプリ としあき(仮) 出張版のキーワード検索バーを隠した状態でカタログを開く
+	var USE_FUTABA_CATALOG_MOD = true;			//futaba catalog modを使用する
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
@@ -662,6 +663,47 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"  font-size: small;" +
 			"}";
 		GM_addStyle(css);
+
+		if (!USE_FUTABA_CATALOG_MOD) return;
+
+		var style_catalog_mod_css =
+			//ピックアップスレ本文
+			".GM_fth_pickuped_caption {" +
+			"  display: block !important;" +
+			"  max-width: 70px !important;" +
+			"  max-height: 15px !important;" +
+			"  overflow: hidden !important;" +
+			"  word-wrap: break-word;" +
+			"}" +
+			".GM_fth_pickuped_caption:hover {" +
+			"  max-height: inherit !important;" +
+			"  max-width: inherit !important;" +
+			"  background-color: #ffdfe9 !important;" +
+			"  border: dotted 1px #CC33CC !important;" +
+			"  padding: 3px !important;" +
+			"  z-index: 1000 !important;" +
+			"  position: absolute !important;" +
+			"  transition: all 0.2s ease 0.2s !important;" +
+			"}" +
+			//ピックアップ既読スレ本文
+			".GM_fth_opened_caption {" +
+			"  display: block !important;" +
+			"  max-width: 70px !important;" +
+			"  max-height: 15px !important;" +
+			"  overflow: hidden !important;" +
+			"  word-wrap: break-word;" +
+			"}" +
+			".GM_fth_opened_caption:hover{" +
+			"  max-height: inherit !important;" +
+			"  max-width: inherit !important;" +
+			"  background-color: #ffdfe9 !important;" +
+			"  border: dotted 1px #CC33CC !important;" +
+			"  padding: 3px !important;" +
+			"  z-index: 1000 !important;" +
+			"  position: absolute !important;" +
+			"  transition: all 0.2s ease 0.2s !important;" +
+			"}";
+		GM_addStyle(style_catalog_mod_css);
 	}
 
 	/*
