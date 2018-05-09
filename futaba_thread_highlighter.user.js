@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev7
+// @version     1.6.6rev8
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -24,6 +24,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_PICKUP_OPENED_THREAD = true;		//既読ピックアップ機能を使用する
 	var OPENED_THREAD_MARKER_STYLE = "";		//開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
 	var HIDE_FUTAKURO_SEARCHBAR = true;			//ふたば@アプリ としあき(仮) 出張版のキーワード検索バーを隠した状態でカタログを開く
+	var USE_FUTABA_CATALOG_MOD = false;			//futaba catalog modを使用する
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
@@ -439,14 +440,14 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		var config = { attributes: true , attributeFilter: ['style'] };
 		if ($(".akahuku_markup_catalog_table").length) {
 			//赤福の既読マーク
-            target = $("html > body table[border] td a[style]");
+			target = $("html > body table[border] td a[style]");
 			config = { attributes: true , attributeFilter: ['class'] };
 		}
 		//オブザーバインスタンスが既にあれば事前に解除する
 		if (openedThreadObserver) openedThreadObserver.disconnect();
 		openedThreadObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
-//				console.log("futaba_thread_highlighter : target mutated");
+				//console.log("futaba_thread_highlighter : target mutated");
 				var timerMutated;
 				if (!$(".akahuku_markup_catalog_table").length) {
 					//赤福以外
@@ -499,7 +500,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$("body > table[border] td small").each(function(){
 				if( $(this).text().match(re) ) {
 					if( (($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	//合間合間にNGスレ判定追加
-					    (($(this).attr("style") + "").indexOf("display: none") == -1 )) {				//合間合間にNGスレ判定追加
+						(($(this).attr("style") + "").indexOf("display: none") == -1 )) {				//合間合間にNGスレ判定追加
 						if ( !$(this).children(".GM_fth_matchedword").length ) {
 							$(this).html($(this).html().replace(re,
 								"<span class='GM_fth_matchedword'>" +
@@ -616,7 +617,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		});
 	}
 
-	 /*
+	/*
 	 *スタイル設定
 	 */
 	function setStyle() {
@@ -645,9 +646,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"}" +
 			//既読セル
 			//外部でマークするので未設定
-//			".GM_kcm_opened {" +
-//			   openedThreadCssText +
-//			"}" +
+			//".GM_kcm_opened {" +
+			//   openedThreadCssText +
+			//"}" +
 			//ピックアップ既読スレ
 			".GM_fth_opened {" +
 			"  max-width: 250px;" +
@@ -662,6 +663,47 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"  font-size: small;" +
 			"}";
 		GM_addStyle(css);
+
+		if (!USE_FUTABA_CATALOG_MOD) return;
+
+		var style_catalog_mod_css =
+			//ピックアップスレ本文
+			".GM_fth_pickuped_caption {" +
+			"  display: block !important;" +
+			"  max-width: 70px !important;" +
+			"  max-height: 15px !important;" +
+			"  overflow: hidden !important;" +
+			"  word-wrap: break-word;" +
+			"}" +
+			".GM_fth_pickuped_caption:hover {" +
+			"  max-height: inherit !important;" +
+			"  max-width: inherit !important;" +
+			"  background-color: #ffdfe9 !important;" +
+			"  border: dotted 1px #CC33CC !important;" +
+			"  padding: 3px !important;" +
+			"  z-index: 1000 !important;" +
+			"  position: absolute !important;" +
+			"  transition: all 0.2s ease 0.2s !important;" +
+			"}" +
+			//ピックアップ既読スレ本文
+			".GM_fth_opened_caption {" +
+			"  display: block !important;" +
+			"  max-width: 70px !important;" +
+			"  max-height: 15px !important;" +
+			"  overflow: hidden !important;" +
+			"  word-wrap: break-word;" +
+			"}" +
+			".GM_fth_opened_caption:hover{" +
+			"  max-height: inherit !important;" +
+			"  max-width: inherit !important;" +
+			"  background-color: #ffdfe9 !important;" +
+			"  border: dotted 1px #CC33CC !important;" +
+			"  padding: 3px !important;" +
+			"  z-index: 1000 !important;" +
+			"  position: absolute !important;" +
+			"  transition: all 0.2s ease 0.2s !important;" +
+			"}";
+		GM_addStyle(style_catalog_mod_css);
 	}
 
 	/*
@@ -683,7 +725,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if(boardName == "二次元裏"){
 				boardName = serverName;
 			}
-			document.title = boardName + ' ' + selectName;
+			document.title = boardName + " " + selectName;
 		}
 	}
 
