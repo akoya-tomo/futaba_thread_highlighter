@@ -666,34 +666,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		if (!USE_FUTABA_CATALOG_MOD) return;
 
-		var style_catalog_mod_css =
+		var futaba_catalog_mod_css =
 			//ピックアップスレ本文
-			".GM_fth_pickuped_caption {" +
+			".GM_fth_pickuped_caption," +
+			".GM_fth_opened_caption," +
+			".GM_fth_pickuped > a > small," +
+			".GM_fth_opened > a > small {" +
 			"  display: block !important;" +
 			"  max-width: 70px !important;" +
 			"  max-height: 15px !important;" +
 			"  overflow: hidden !important;" +
 			"  word-wrap: break-word;" +
 			"}" +
-			".GM_fth_pickuped_caption:hover {" +
-			"  max-height: inherit !important;" +
-			"  max-width: inherit !important;" +
-			"  background-color: #ffdfe9 !important;" +
-			"  border: dotted 1px #CC33CC !important;" +
-			"  padding: 3px !important;" +
-			"  z-index: 1000 !important;" +
-			"  position: absolute !important;" +
-			"  transition: all 0.2s ease 0.2s !important;" +
-			"}" +
-			//ピックアップ既読スレ本文
-			".GM_fth_opened_caption {" +
-			"  display: block !important;" +
-			"  max-width: 70px !important;" +
-			"  max-height: 15px !important;" +
-			"  overflow: hidden !important;" +
-			"  word-wrap: break-word;" +
-			"}" +
-			".GM_fth_opened_caption:hover{" +
+			".GM_fth_pickuped_caption:hover," +
+			".GM_fth_opened_caption:hover," +
+			".GM_fth_pickuped > a > small:hover," +
+			".GM_fth_opened > a > small:hover {" +
 			"  max-height: inherit !important;" +
 			"  max-width: inherit !important;" +
 			"  background-color: #ffdfe9 !important;" +
@@ -703,7 +691,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"  position: absolute !important;" +
 			"  transition: all 0.2s ease 0.2s !important;" +
 			"}";
-		GM_addStyle(style_catalog_mod_css);
+		GM_addStyle(futaba_catalog_mod_css);
 	}
 
 	/*
