@@ -10,7 +10,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 
 ※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN 開いたスレをカタログにマーク](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)・[KOSHIAN Catalog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
 
-※その他のUserscriptとFirefoxアドオンKOSHIANの改変版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
+※その他のUserscriptとFirefoxアドオンこしあんの改変版は[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki)の一覧からどうぞ
 
 ## 使い方
 * ふたばのカタログモードの設定で「文字数」を適当な大きさ(4以上推奨)に設定してください。(板毎に設定が必要です)
@@ -48,12 +48,14 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 
 ## おまけ
 スレ本文の文字数を増やしたらカタログが見づらくて生きるのが辛い場合  
-himuro_majika氏作のユーザースタイルシートも使ってみてください。  
-[futaba_catalog_mod(モダンバージョン)](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)  
+himuro\_majika氏作のユーザースタイルシートも使ってみてください。  
+[futaba\_catalog\_mod(モダンバージョン)](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)  
 または  
-[futaba_catalog_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
+[futaba\_catalog\_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev9 2018-05-10
+  - 文字スレをピックアップしたときに本文の長さが制限されない不具合を修正
 * v1.6.6rev8 2018-05-10
   - futaba_catalog_modへの対応
 * v1.6.6rev7 2018-02-24
