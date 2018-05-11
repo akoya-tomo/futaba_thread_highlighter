@@ -45,6 +45,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 ## 注意事項
 * 既読スレのピックアップをしない（できない）場合はスクリプト内の設定USE\_PICKUP\_OPENED\_THREADをfalseにしてください。
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
+* futaba\_catalog\_mod（モダンバージョン）使用時にKOSHIAN Catalog Marker kaiの既読マークが付かないときはKOSHIAN Catalog Marker kaiの開いたスレのスタイルの末尾に"!important"を追記して下さい。  
 
 ## おまけ
 スレ本文の文字数を増やしたらカタログが見づらくて生きるのが辛い場合  
