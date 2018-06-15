@@ -48,11 +48,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setStyle();
 		makecontainer();
 		makeConfigUI();
-		futakuroSearchBarDispCtrl();
 		highlight();
 		pickup_opened_threads();
 		check_akahuku_reload();
 		check_opened_threads_mark();
+		setTimeout(futakuroSearchBarDispCtrl, 1000);
 	}
 
 	/*
