@@ -32,7 +32,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var akahukuloadstat;
 	var openedThreadCssText = OPENED_THREAD_MARKER_STYLE;
 	var boardName = $("#tit").text().match(/^[^＠]+/);
-	var selectName = $("body > b > a").text();
 	var opacityZero = false;
 	var openedThreadObserver;
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
@@ -411,6 +410,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 							pickup_opened_threads();
 							check_opened_threads_mark();
 						}
+						setTitle();
 					}
 				}
 				else if (nodes.attr("border") == "1") {
@@ -710,6 +710,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function setTitle() {
 		if (USE_BOARD_NAME) {
+			var selectName = $("body > b > a").text();
+
 			if(boardName == "二次元裏"){
 				boardName = serverName;
 			}
