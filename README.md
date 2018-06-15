@@ -19,6 +19,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 検索ワードは全板共通と各板個別でそれぞれ設定できます。  
 * 既読スレをマークできるアドオンとの連携でカタログ内の既読スレもピックアップされます。（デフォルト：有効）
 * タブの表示が「板名（二次裏のみサーバー名）＋ソート名（カタログ・新順・古順etc）」に変更されます。（デフォルト：有効）
+  - フレーム表示では動作しません。
 * 検索ワードに該当したスレや既読スレでも、ふたクロや[合間合間に](http://toshiakisp.github.io/akahuku-firefox-sp/#others)でNGにして消すとピックアップされなくなります。  
 * [ふたば@アプリ としあき\(仮\) 出張版](https://chrome.google.com/webstore/detail/%E3%81%B5%E3%81%9F%E3%81%B0%E3%82%A2%E3%83%97%E3%83%AA-%E3%81%A8%E3%81%97%E3%81%82%E3%81%8D%E4%BB%AE-%E5%87%BA%E5%BC%B5%E7%89%88/nhiegnhgjieegcgdkbneigigmpijbnhe)のキーワード検索が隠れた状態でカタログが開きます。（デフォルト：有効）  
   - 検索バー\[表示\]ボタンをクリックすることで隠れていたキーワード検索バーが出現します。  
@@ -35,7 +36,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 
 * USE\_BOARD\_NAME : タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する \(*true*\)  
 * USE\_PICKUP\_OPENED\_THREAD : 既読ピックアップ機能を使用する \(*true*\)  
-  [KOSHIAN Catalog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)の他に[KOSHIAN 開いたスレをカタログにマーク](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)・[ふたクロ](http://futakuro.com/)でも動作します。
+  - [KOSHIAN Catalog Marker kai](https://github.com/akoya-tomo/koshian_catalog_marker_kai)の他に[KOSHIAN 開いたスレをカタログにマーク](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)・[ふたクロ](http://futakuro.com/)でも動作します。
 * OPENED\_THREAD\_MARKER\_STYLE : 既読マークのスタイル \(*""*\)  
   - 通常はアドオンが既読マークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。また赤福ではマークのスタイルがコピーできないため、変数横のコメントを参考にスタイルを設定して下さい。  
 * HIDE\_FUTAKURO\_SEARCHBAR : ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を隠した状態でカタログを開く \(*true*\)  
@@ -55,6 +56,9 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev10 2018-06-16
+  - ふたクロでソート操作したときにタイトルにソート名が反映されない不具合を修正
+  - ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を検出するタイミングを変更
 * v1.6.6rev9 2018-05-10
   - 文字スレをピックアップしたときに本文の長さが制限されない不具合を修正
 * v1.6.6rev8 2018-05-10

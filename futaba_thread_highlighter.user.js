@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev9
+// @version     1.6.6rev10
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -32,7 +32,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var akahukuloadstat;
 	var openedThreadCssText = OPENED_THREAD_MARKER_STYLE;
 	var boardName = $("#tit").text().match(/^[^＠]+/);
-	var selectName = $("body > b > a").text();
 	var opacityZero = false;
 	var openedThreadObserver;
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
@@ -49,11 +48,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		setStyle();
 		makecontainer();
 		makeConfigUI();
-		futakuroSearchBarDispCtrl();
 		highlight();
 		pickup_opened_threads();
 		check_akahuku_reload();
 		check_opened_threads_mark();
+		setTimeout(futakuroSearchBarDispCtrl, 1000);
 	}
 
 	/*
@@ -411,6 +410,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 							pickup_opened_threads();
 							check_opened_threads_mark();
 						}
+						setTitle();
 					}
 				}
 				else if (nodes.attr("border") == "1") {
@@ -710,6 +710,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function setTitle() {
 		if (USE_BOARD_NAME) {
+			var selectName = $("body > b > a").text();
+
 			if(boardName == "二次元裏"){
 				boardName = serverName;
 			}
