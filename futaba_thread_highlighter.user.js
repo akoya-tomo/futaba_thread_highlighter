@@ -582,7 +582,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		//NGスレとピックアップ済みは除外
 		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[style = ''],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
 		//OPENED_THREAD_MARKER_STYLEが未設定ならマークされたスタイルをコピー
-		if (opened.length && !openedThreadCssText) {
+		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
 			openedThreadCssText = opened.get(0).style.cssText;
 			setOpenedThreadStyle();
 		}
@@ -604,7 +604,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 				//合間合間にのボタンを削除
 				$(this).children("small.aima_aimani_generated").replaceWith();
-				$(this).replaceWith("<div class='GM_fth_opened'>" + $(this).html() + "</div>");
+
+				if ($(this).attr("old")) {
+					$(this).replaceWith("<div class='GM_fth_opened' opened='true' old='true'>" + $(this).html() + "</div>");
+				} else {
+					$(this).replaceWith("<div class='GM_fth_opened' opened='true'>" + $(this).html() + "</div>");
+				}
 			}
 		});
 		var $fth_opened = $(".GM_fth_opened");
