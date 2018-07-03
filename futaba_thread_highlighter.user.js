@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev11
+// @version     1.6.6rev12
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -557,7 +557,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 				//合間合間にのボタンを削除
 				$(this).children("small.aima_aimani_generated").replaceWith();
-				$(this).replaceWith("<div class='GM_fth_pickuped'>" + $(this).html() + "</div>");
+
+				//KOSHIANカタログマーカー改v2のマークを反映
+				var attr = "";
+				if ($(this).attr("opened") == "true") attr = " opened='true'";
+				if ($(this).attr("old") == "true") attr += " old='true'";
+				$(this).replaceWith("<div class='GM_fth_pickuped'" + attr + ">" + $(this).html() + "</div>");
 			}
 		});
 		var $pickuped = $(".GM_fth_pickuped");

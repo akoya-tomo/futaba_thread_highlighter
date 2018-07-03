@@ -11,7 +11,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 ※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
 [KOSHIAN カタログマーカー](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)のv2.0.0以降では既読スレピックアップ機能は動作しません。  
 
-※その他のUserscriptなどのふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。
+※その他のふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。
 
 ## 使い方
 * ふたばのカタログモードの設定で「文字数」を適当な大きさ(4以上推奨)に設定してください。(板毎に設定が必要です)
@@ -57,6 +57,8 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev12 2018-07-03
+  - 検索ワードでピックアップしたスレにもKOSHIAN カタログマーカー 改 v2.0以降のマークを反映するように修正
 * v1.6.6rev11 2018-07-03
   - KOSHIAN カタログマーカー 改 v2.0以降のマークの色設定に対応
 * v1.6.6rev10 2018-06-16
