@@ -557,7 +557,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 				//合間合間にのボタンを削除
 				$(this).children("small.aima_aimani_generated").replaceWith();
-				$(this).replaceWith("<div class='GM_fth_pickuped'>" + $(this).html() + "</div>");
+
+				//KOSHIANカタログマーカー改v2のマークを反映
+				var attr = "";
+				if ($(this).attr("opened") == "true") attr = " opened='true'";
+				if ($(this).attr("old") == "true") attr += " old='true'";
+				$(this).replaceWith("<div class='GM_fth_pickuped'" + attr + ">" + $(this).html() + "</div>");
 			}
 		});
 		var $pickuped = $(".GM_fth_pickuped");
