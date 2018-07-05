@@ -446,19 +446,19 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 		//オブザーバインスタンスが既にあれば事前に解除する
 		if (openedThreadObserver) openedThreadObserver.disconnect();
+
 		openedThreadObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				//console.log("futaba_thread_highlighter : target mutated");
-				var timerMutated;
 				if (!$(".akahuku_markup_catalog_table").length) {
 					//赤福以外
-					timerMutated = setTimeout(function() {
+					setTimeout(function() {
 						highlight();
 						pickup_opened_threads();
 					}, 200);
 				} else if (mutation.target.className == "akahuku_visited") {
 					//赤福の既読マーク
-					timerMutated = setTimeout(function() {
+					setTimeout(function() {
 						$(mutation.target).parent("td").css("background-image","none");	//ダミーのスタイルを設定（既読ピックアップ用マーク）
 						pickup_opened_threads();
 					}, 200);
