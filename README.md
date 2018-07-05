@@ -13,6 +13,11 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 
 ※その他のふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。
 
+## スクリーンショット
+KOSHIANカタログマーカー改でのピックアップ例  
+[![スクリーンショット](images/thumbnail01.png "スクリーンショット")](images/screenshot01.png?raw=true)  
+ピンクの背景が検索ワードでピックアップしたスレで、文字背景の黄色が検索ワード。枠付きは既読スレ。
+
 ## 使い方
 * ふたばのカタログモードの設定で「文字数」を適当な大きさ(4以上推奨)に設定してください。(板毎に設定が必要です)
 * スレッド検索該当スレッドの[設定]ボタンをクリックして監視したい検索ワードを入力してください。
@@ -57,6 +62,8 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev13 2018-07-06
+  - ピックアップのイベント通知を追加（ピックアップしたスレでも他のアドオンやUserscriptが動作できるように）
 * v1.6.6rev12 2018-07-03
   - 検索ワードでピックアップしたスレにもKOSHIAN カタログマーカー 改 v2.0以降のマークを反映するように修正
 * v1.6.6rev11 2018-07-03

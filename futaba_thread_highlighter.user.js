@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev12
+// @version     1.6.6rev13
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -35,6 +35,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var opacityZero = false;
 	var openedThreadObserver;
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
+	var timerPickup;
 
 	init();
 
@@ -445,19 +446,19 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 		//オブザーバインスタンスが既にあれば事前に解除する
 		if (openedThreadObserver) openedThreadObserver.disconnect();
+
 		openedThreadObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				//console.log("futaba_thread_highlighter : target mutated");
-				var timerMutated;
 				if (!$(".akahuku_markup_catalog_table").length) {
 					//赤福以外
-					timerMutated = setTimeout(function() {
+					setTimeout(function() {
 						highlight();
 						pickup_opened_threads();
 					}, 200);
 				} else if (mutation.target.className == "akahuku_visited") {
 					//赤福の既読マーク
-					timerMutated = setTimeout(function() {
+					setTimeout(function() {
 						$(mutation.target).parent("td").css("background-image","none");	//ダミーのスタイルを設定（既読ピックアップ用マーク）
 						pickup_opened_threads();
 					}, 200);
@@ -573,6 +574,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: width,
 			});
 		});
+
+		notifyPickup();
 	}
 
 	/*
@@ -625,6 +628,23 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: fth_opened_width,
 			});
 		});
+
+		notifyPickup();
+	}
+
+	/*
+	 *ピックアップ通知
+	 */
+	function notifyPickup() {
+		if (timerPickup) {
+			//マークの検出をしなくなるまで通知遅延
+			clearTimeout(timerPickup);
+			timerPickup = null;
+		}
+		timerPickup = setTimeout(() => {
+			timerPickup = null;
+			document.dispatchEvent(new CustomEvent("FutabaTH_pickup"));
+		}, 200);
 	}
 
 	/*
