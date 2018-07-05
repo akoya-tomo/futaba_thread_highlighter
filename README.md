@@ -14,7 +14,7 @@ Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampe
 ※その他のふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。
 
 ## スクリーンショット
-KOSHIANカタログマーカー改でのピックアップ例  
+KOSHIAN カタログマーカー改のマークのピックアップ例  
 [![スクリーンショット](images/thumbnail01.png "スクリーンショット")](images/screenshot01.png?raw=true)  
 ピンクの背景が検索ワードでピックアップしたスレで、文字背景の黄色が検索ワード。枠付きは既読スレ。
 
