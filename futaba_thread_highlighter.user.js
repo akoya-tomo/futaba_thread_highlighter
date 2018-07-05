@@ -35,6 +35,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var opacityZero = false;
 	var openedThreadObserver;
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
+	var timerPickup;
 
 	init();
 
@@ -573,6 +574,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: width,
 			});
 		});
+
+		notifyPickup();
 	}
 
 	/*
@@ -625,6 +628,23 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: fth_opened_width,
 			});
 		});
+
+		notifyPickup();
+	}
+
+	/*
+	 *ピックアップ通知
+	 */
+	function notifyPickup() {
+		if (timerPickup) {
+			//マークの検出をしなくなるまで通知遅延
+			clearTimeout(timerPickup);
+			timerPickup = null;
+		}
+		timerPickup = setTimeout(() => {
+			timerPickup = null;
+			document.dispatchEvent(new CustomEvent("FutabaTH_pickup"));
+		}, 200);
 	}
 
 	/*
