@@ -62,7 +62,7 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
-* v1.6.6rev14 2018-07-13
+* v1.6.6rev14 2018-07-14
   - 既読スレのピックアップ処理を修正
   - 赤福Firefox spでfutaba catalog NGと併用すると既読スレがピックアップできないことがある不具合修正
   - コード整理
