@@ -35,7 +35,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var opacityZero = false;
 	var openedThreadObserver;
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
-	var timerPickup;
+	var timerMutated;
 
 	init();
 
@@ -51,6 +51,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		makeConfigUI();
 		highlight();
 		pickup_opened_threads();
+		notifyPickup();
 		check_akahuku_reload();
 		check_opened_threads_mark();
 		setTimeout(futakuroSearchBarDispCtrl, 1000);
@@ -410,6 +411,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						if (USE_PICKUP_OPENED_THREAD) {
 							pickup_opened_threads();
 							check_opened_threads_mark();
+							notifyPickup();
 						}
 						setTitle();
 					}
@@ -423,6 +425,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 							if (USE_PICKUP_OPENED_THREAD) {
 								pickup_opened_threads();
 								check_opened_threads_mark();
+								notifyPickup();
 							}
 						}
 					}, 10);
@@ -450,19 +453,15 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		openedThreadObserver = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
 				//console.log("futaba_thread_highlighter : target mutated");
-				if (!$(".akahuku_markup_catalog_table").length) {
-					//赤福以外
-					setTimeout(function() {
-						highlight();
-						pickup_opened_threads();
-					}, 200);
-				} else if (mutation.target.className == "akahuku_visited") {
-					//赤福の既読マーク
-					setTimeout(function() {
-						$(mutation.target).parent("td").css("background-image","none");	//ダミーのスタイルを設定（既読ピックアップ用マーク）
-						pickup_opened_threads();
-					}, 200);
+				if (timerMutated) {
+					clearTimeout(timerMutated);
+					timerMutated = null;
 				}
+				timerMutated = setTimeout(function() {
+					highlight();
+					pickup_opened_threads();
+					notifyPickup();
+				}, 200);
 			});
 		});
 		for (var i = 0; i < target.length; i++) {
@@ -574,8 +573,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: width,
 			});
 		});
-
-		notifyPickup();
 	}
 
 	/*
@@ -628,23 +625,14 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: fth_opened_width,
 			});
 		});
-
-		notifyPickup();
 	}
 
 	/*
 	 *ピックアップ通知
 	 */
 	function notifyPickup() {
-		if (timerPickup) {
-			//マークの検出をしなくなるまで通知遅延
-			clearTimeout(timerPickup);
-			timerPickup = null;
-		}
-		timerPickup = setTimeout(() => {
-			timerPickup = null;
-			document.dispatchEvent(new CustomEvent("FutabaTH_pickup"));
-		}, 200);
+		document.dispatchEvent(new CustomEvent("FutabaTH_pickup"));
+		//console.log('futaba_thread_highlighter: Notyfy pickup completed');
 	}
 
 	/*
