@@ -52,8 +52,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		highlight();
 		pickup_opened_threads();
 		notifyPickup();
-		check_akahuku_reload();
 		check_opened_threads_mark();
+		check_akahuku_reload();
 		setTimeout(futakuroSearchBarDispCtrl, 1000);
 	}
 
@@ -585,7 +585,19 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
 		//NGスレとピックアップ済みは除外
-		var opened = $("body > table td[style]:not([style *= 'display: none'],[style *= 'display:none'],[style = ''],[class *= 'GM_fth_highlighted'],[class *= 'GM_fcn_ng_'])").clone();
+		var opened;
+		var filter =
+			"[style *= 'display: none']," +			// NGスレ
+			"[style *= 'display:none']," +			// ふたクロ 空td
+			"[class *= 'GM_fth_highlighted']," +	// ピックアップ済み
+			"[class *= 'GM_fcn_ng_']";				// futaba catalog NG
+		if ($(".akahuku_markup_catalog_table").length) {
+			// 赤福の既読スレ
+			opened = $("body > table td:has('a.akahuku_visited'):not(" + filter + ")").clone();
+		} else {
+			// 既読スレ
+			opened = $("body > table td[style]:not(" + filter +")").clone();
+		}
 		//OPENED_THREAD_MARKER_STYLEが未設定ならマークされたスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
 			openedThreadCssText = opened.get(0).style.cssText;
