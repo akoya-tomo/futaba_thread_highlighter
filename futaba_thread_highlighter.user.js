@@ -13,7 +13,7 @@
 // @license     MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAPUExURYv4i2PQYy2aLUe0R////zorx9oAAAAFdFJOU/////8A+7YOUwAAAElJREFUeNqUj1EOwDAIQoHn/c88bX+2fq0kRsAoUXVAfwzCttWsDWzw0kNVWd2tZ5K9gqmMZB8libt4pSg6YlO3RnTzyxePAAMAzqMDgTX8hYYAAAAASUVORK5CYII=
 // ==/UserScript==
-
+/* globals jQuery */
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 (function ($) {
@@ -393,7 +393,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			// ふたクロ
 			highlight();
 			target = $("html > body > table[border]").get(0);
-			config = { attributes: true , attributeFilter: ['style'] };
+			config = { attributes: true , attributeFilter: ["style"] };
 		}
 		var observer = new MutationObserver(function(mutations) {
 			mutations.forEach(function(mutation) {
@@ -435,11 +435,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if (!USE_PICKUP_OPENED_THREAD) return;
 
 		var target = $("html > body table[border] td");
-		var config = { attributes: true , attributeFilter: ['style'] };
+		var config = { attributes: true , attributeFilter: ["style"] };
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読マーク
 			target = $("html > body table[border] td a[style]");
-			config = { attributes: true , attributeFilter: ['class'] };
+			config = { attributes: true , attributeFilter: ["class"] };
 		}
 		// オブザーバインスタンスが既にあれば事前に解除
 		if (openedThreadObserver) openedThreadObserver.disconnect();
@@ -496,7 +496,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				  ( ($(this).parent("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1 ) &&		// 「futaba catalog NG」NGスレ
 				  ( ($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	// NGスレ
 				  ( ($(this).attr("style") + "").indexOf("display: none") == -1 )) {				// 「合間合間に」NGスレ
-					  if ( !$(this).children(".GM_fth_matchedword").length ) {
+					if ( !$(this).children(".GM_fth_matchedword").length ) {
 						$(this).html($(this).html().replace(re,
 							"<span class='GM_fth_matchedword'>" +
 							$(this).text().match(re)[0] +
