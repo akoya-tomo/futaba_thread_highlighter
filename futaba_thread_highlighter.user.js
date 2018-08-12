@@ -533,7 +533,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_pickuped").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_pickuped").remove();
 		}
-		var highlighted = $("body > table .GM_fth_highlighted").clone();
+		var highlighted = $("body > table .GM_fth_highlighted:not([class *= 'GM_fcn_ng_'])").clone();
 		$("#GM_fth_highlighted_threads").append(highlighted);
 		// 要素の中身を整形
 		highlighted.each(function(){
