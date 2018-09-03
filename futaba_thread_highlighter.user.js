@@ -13,6 +13,7 @@
 // @license     MIT
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAPUExURYv4i2PQYy2aLUe0R////zorx9oAAAAFdFJOU/////8A+7YOUwAAAElJREFUeNqUj1EOwDAIQoHn/c88bX+2fq0kRsAoUXVAfwzCttWsDWzw0kNVWd2tZ5K9gqmMZB8libt4pSg6YlO3RnTzyxePAAMAzqMDgTX8hYYAAAAASUVORK5CYII=
 // ==/UserScript==
+
 /* globals jQuery */
 this.$ = this.jQuery = jQuery.noConflict(true);
 
@@ -39,9 +40,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	init();
 
 	function init(){
-		console.log("futaba_thread_highlighter commmon: " +
+		console.log("futaba_thread_highlighter commmon: " +	// eslint-disable-line no-console
 			GM_getValue("_futaba_thread_search_words", ""));
-		console.log("futaba_thread_highlighter indivisual: " +
+		console.log("futaba_thread_highlighter indivisual: " +	// eslint-disable-line no-console
 			getCurrentIndivValue());
 		GM_registerMenuCommand("スレッド検索ワード編集", editWords);
 		setTitle();
@@ -106,7 +107,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		var input_common = $("#GM_fth_searchword_common").val();
 		var input_indiv = $("#GM_fth_searchword_individual").val();
 		GM_setValue("_futaba_thread_search_words", input_common);
-		console.log("futaba_thread_highlighter: common searchword updated - " + input_common);
+		console.log("futaba_thread_highlighter: common searchword updated - " + input_common);	// eslint-disable-line no-console
 		setIndivValue(input_indiv);
 		$("#GM_fth_config_container").fadeOut(100);
 		highlight(true);
@@ -122,7 +123,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			obj_indiv[serverFullPath] = val;
 			var jsonstring = JSON.stringify(obj_indiv);
 			GM_setValue("search_words_indiv", jsonstring);
-			console.log("futaba_thread_highlighter: indivisual searchword updated@" + serverFullPath + " - " + val);
+			console.log("futaba_thread_highlighter: indivisual searchword updated@" + serverFullPath + " - " + val);	// eslint-disable-line no-console
 		}
 	}
 
@@ -499,9 +500,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			removeOldHighlighted();
 			$("body > table[border] td small").each(function(){
 				if( $(this).text().match(re) &&
-				  ( ($(this).parent("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1 ) &&		// 「futaba catalog NG」NGスレ
-				  ( ($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	// NGスレ
-				  ( ($(this).attr("style") + "").indexOf("display: none") == -1 )) {				// 「合間合間に」NGスレ
+					( ($(this).parent("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1 ) &&	// 「futaba catalog NG」NGスレ
+					( ($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	// NGスレ
+					( ($(this).attr("style") + "").indexOf("display: none") == -1 )) {				// 「合間合間に」NGスレ
 					if ( !$(this).children(".GM_fth_matchedword").length ) {
 						$(this).html($(this).html().replace(re,
 							"<span class='GM_fth_matchedword'>" +
@@ -529,7 +530,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				});
 			}
 		}
-		console.log('futaba_thread_highlighter - Parsing highlighted@' + serverFullPath + ': '+((new Date()).getTime()-Start) +'msec');	// log parsing time
+		console.log("futaba_thread_highlighter - Parsing highlighted@" + serverFullPath + ": " + ((new Date()).getTime() - Start) + "msec");	// eslint-disable-line no-console
 	}
 
 	/*
@@ -548,7 +549,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				//$(this).children("a").replaceWith("<div class='GM_fth_pickuped_caption'>" + $(this).html() + "</div>");
 			} else {
 				$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_pickuped_caption'>" +
-													  $(this).children("small").html() + "</div>");
+													  $(this).children("small").html() + "</div>");	// eslint-disable-line no-mixed-spaces-and-tabs
 				$(this).children("br").replaceWith();
 			}
 			// 「合間合間に」のボタンを削除
@@ -575,7 +576,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function pickup_opened_threads() {
 		if (!USE_PICKUP_OPENED_THREAD) return;
-	
+
 		var Start = new Date().getTime();	// count parsing time
 		// ピックアップに既読スレがあればクリア
 		if ( $("#GM_fth_highlighted_threads .GM_fth_opened").length ) {
@@ -614,7 +615,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					//$(this).children("a").replaceWith("<div class='GM_fth_opened_caption'>" + $(this).html() + "</div>");
 				} else {
 					$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_opened_caption'>" +
-																					  $(this).children("small").html() + "</div>");
+																					  $(this).children("small").html() + "</div>");	// eslint-disable-line no-mixed-spaces-and-tabs
 					$(this).children("br").replaceWith();
 				}
 				// 「合間合間に」のボタンを削除
@@ -636,7 +637,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				width: fth_opened_width,
 			});
 		});
-		console.log('futaba_thread_highlighter - Parsing opened@' + serverFullPath + ': '+((new Date()).getTime()-Start) +'msec');	// log parsing time
+		console.log("futaba_thread_highlighter - Parsing opened@" + serverFullPath + ": " + ((new Date()).getTime() - Start) + "msec");	// eslint-disable-line no-console
 	}
 
 	/*
