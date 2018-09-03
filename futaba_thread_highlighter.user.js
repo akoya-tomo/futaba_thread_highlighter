@@ -178,6 +178,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				"background-color": "",
 			}
 		});
+		if ($("body").attr("__fcn_catalog_visibility") == "hidden") $pickup_thread_container.css("visibility", "hidden");
 		$pickup_thread_area.after($pickup_thread_container);
 	}
 
@@ -412,6 +413,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					}
 				}
 				else if (nodes.attr("border") == "1") {
+					if ($("body").attr("__fcn_catalog_visibility") == "hidden") $("#GM_fth_highlighted_threads").css("visibility", "hidden");
 					var timer = setInterval(function() {
 						var status = $("#akahuku_catalog_reload_status").text();
 						if(status === "" || status == "完了しました") {
@@ -638,6 +640,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function notifyPickup() {
 		document.dispatchEvent(new CustomEvent("FutabaTH_pickup"));
+		if ($("body").attr("__fcn_catalog_visibility") == "visible") $("#GM_fth_highlighted_threads").css("visibility", "visible");
 		//console.log('futaba_thread_highlighter: Notyfy pickup completed');
 	}
 
