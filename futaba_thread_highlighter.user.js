@@ -438,11 +438,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		var target = $("html > body table[border] td");
 		var config = { attributes: true , attributeFilter: ["style"] };
-		if ($(".akahuku_markup_catalog_table").length) {
-			// 赤福の既読マーク
-			target = $("html > body table[border] td a[style]");
-			config = { attributes: true , attributeFilter: ["class"] };
-		}
 		// オブザーバインスタンスが既にあれば事前に解除
 		if (openedThreadObserver) openedThreadObserver.disconnect();
 
@@ -462,6 +457,15 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		});
 		for (var i = 0; i < target.length; i++) {
 			openedThreadObserver.observe(target[i], config);
+		}
+
+		if ($(".akahuku_markup_catalog_table").length) {
+			// 赤福の既読マーク
+			target = $("html > body table[border] td a[style]");
+			config = { attributes: true , attributeFilter: ["class"] };
+			for (var j = 0; j < target.length; j++) {
+				openedThreadObserver.observe(target[j], config);
+			}
 		}
 	}
 
