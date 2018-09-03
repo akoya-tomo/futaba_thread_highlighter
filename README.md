@@ -54,14 +54,17 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
 * futaba\_catalog\_mod（モダンバージョン）使用時にKOSHIAN カタログマーカー 改のマークが付かないときは[こちら](https://github.com/akoya-tomo/koshian_catalog_marker_kai#注意事項)を参照してください。  
 
-## おまけ
+## Tips
 スレ本文の文字数を増やしたらカタログが見づらくて生きるのが辛い場合  
 himuro\_majika氏作のユーザースタイルシートも使ってみてください。  
 [futaba\_catalog\_mod(モダンバージョン)](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)  
 または  
-[futaba\_catalog\_mod(クラシックバージョン)※ねないこユーザー向け](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
+[futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev16 2018-09-04
+  - futaba catalog NGの「ページ読み込みが完了するまでカタログを隠す」オプションに対応
+  - 赤福Firefox spでfutaba catalog NGのNG操作をピックアップにすぐに反映するように修正
 * v1.6.6rev15 2018-08-13
   - 検索ワードでピックアップしたスレをfutaba catalog NGでNGにすると、再びピックアップ表示される不具合を修正
 * v1.6.6rev14 2018-07-14
