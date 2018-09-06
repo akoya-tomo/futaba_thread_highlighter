@@ -37,7 +37,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
 	var timerMutated;
 
-	init();
+	$(init);
 
 	function init(){
 		console.log("futaba_thread_highlighter commmon: " +	// eslint-disable-line no-console
