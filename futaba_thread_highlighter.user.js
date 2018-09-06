@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev16
+// @version     1.6.6rev17
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -37,7 +37,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
 	var timerMutated;
 
-	init();
+	$(init);
 
 	function init(){
 		console.log("futaba_thread_highlighter commmon: " +	// eslint-disable-line no-console
