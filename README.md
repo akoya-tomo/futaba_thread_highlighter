@@ -1,6 +1,5 @@
 ## futaba thread highlighter K
-このUserscriptは[himuro\_majika](https://github.com/himuro-majika)氏の[futaba thread highlighter](https://github.com/himuro-majika/futaba_thread_highlighter)を改変したものです。  
-ふたば☆ちゃんねるのカタログに現在表示されているすべてのスレ本文の文字列を監視してページトップに一覧表示します。  
+このUserscriptはふたば☆ちゃんねるのカタログに現在表示されているすべてのスレ本文の文字列を監視してページトップに一覧表示する[himuro\_majika](https://github.com/himuro-majika)氏の[futaba thread highlighter](https://github.com/himuro-majika/futaba_thread_highlighter)を改変したものです。  
 一度検索ワードを設定しておけば定時スレ等が探しやすくなります。検索ワードには正規表現が利用できるのでより柔軟にピックアップできます。  
 また既読スレをマークできるアドオンとの連携でカタログ内の既読スレのピックアップも可能です。  
 
@@ -62,6 +61,8 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev17 2018-09-07
+  - NGにしたスレがピックアップに一瞬表示されることがある不具合を修正
 * v1.6.6rev16 2018-09-04
   - futaba catalog NGの「ページ読み込みが完了するまでカタログを隠す」オプションに対応
   - 赤福Firefox spでfutaba catalog NGのNG操作をピックアップにすぐに反映するように修正
