@@ -7,8 +7,8 @@ Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/ta
 (GreasemonkeyやViolentmonkeyでの動作は未確認です)  
 Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい。  
 
-※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
-[KOSHIAN カタログマーカー](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)のv2.0.0以降では既読スレピックアップ機能は動作しません。  
+※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Extended・赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
+オリジナル版の[KOSHIAN カタログマーカー](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)のv2.0.0以降では既読スレピックアップ機能は動作しません。  
 
 ※その他のふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。
 
@@ -61,6 +61,9 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev18 2018-09-18
+  - 赤福Extendedで既に開いているスレをピックアップから開いたときに別のタブで開かないように修正
+  - キーワードでピックアップしたスレに赤福Extendedの既読マークが反映されるように修正
 * v1.6.6rev17 2018-09-07
   - NGにしたスレがピックアップに一瞬表示されることがある不具合を修正
 * v1.6.6rev16 2018-09-04
