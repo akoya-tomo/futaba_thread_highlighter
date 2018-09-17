@@ -540,26 +540,39 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_pickuped").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_pickuped").remove();
 		}
-		var highlighted = $("body > table .GM_fth_highlighted:not([class *= 'GM_fcn_ng_'])").clone();
-		$("#GM_fth_highlighted_threads").append(highlighted);
+		var highlighted = $("body > table .GM_fth_highlighted:not([class *= 'GM_fcn_ng_'])");
 		// 要素の中身を整形
 		highlighted.each(function(){
-			if ( !$(this).children("small").length ) {		// 文字スレ
-				//console.log($(this).children("a").html());
-				//$(this).children("a").replaceWith("<div class='GM_fth_pickuped_caption'>" + $(this).html() + "</div>");
+			var $clone = $(this).clone();
+			$("#GM_fth_highlighted_threads").append($clone);
+
+			if ( !$clone.children("small").length ) {		// 文字スレ
+				//console.log($clone.children("a").html());
+				//$clone.children("a").replaceWith("<div class='GM_fth_pickuped_caption'>" + $clone.html() + "</div>");
 			} else {
-				$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_pickuped_caption'>" +
-													  $(this).children("small").html() + "</div>");	// eslint-disable-line no-mixed-spaces-and-tabs
-				$(this).children("br").replaceWith();
+				$clone.children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_pickuped_caption'>" +
+													  $clone.children("small").html() + "</div>");	// eslint-disable-line no-mixed-spaces-and-tabs
+				$clone.children("br").replaceWith();
 			}
 			// 「合間合間に」のボタンを削除
-			$(this).children("small.aima_aimani_generated").replaceWith();
+			$clone.children("small.aima_aimani_generated").replaceWith();
+
+			// aタグがクリックされたらカタログのaタグをクリックする
+			$clone.children("a").click((e) => {
+				var origin_anchor = $(this).children("a:first").get(0);
+				if (origin_anchor) {
+					origin_anchor.click();
+					e.preventDefault();
+				}
+			});
 
 			// KOSHIANカタログマーカー改v2のマークを反映
 			var attr = "";
-			if ($(this).attr("opened") == "true") attr = " opened='true'";
-			if ($(this).attr("old") == "true") attr += " old='true'";
-			$(this).replaceWith("<div class='GM_fth_pickuped'" + attr + ">" + $(this).html() + "</div>");
+			if ($clone.attr("opened") == "true") attr = " opened='true'";
+			if ($clone.attr("old") == "true") attr += " old='true'";
+			$clone.wrap("<div class='GM_fth_pickuped'" + attr + ">");
+			$clone.children().unwrap();
+
 		});
 		var $pickuped = $(".GM_fth_pickuped");
 		$pickuped.each(function(){
@@ -591,10 +604,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"[class *= 'GM_fcn_ng_']";				// futaba catalog NG
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読スレ
-			opened = $("body > table td:has('a.akahuku_visited'):not(" + filter + ")").clone();
+			opened = $("body > table td:has('a.akahuku_visited'):not(" + filter + ")");
 		} else {
 			// 既読スレ
-			opened = $("body > table td[style]:not(" + filter +")").clone();
+			opened = $("body > table td[style]:not(" + filter +")");
 		}
 		// OPENED_THREAD_MARKER_STYLEが未設定でKOSHIANカタログマーカー改v2以外のマークならスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
@@ -602,31 +615,41 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			setOpenedThreadStyle();
 		}
 
-		$("#GM_fth_highlighted_threads").append(opened);
-
 		// 要素の中身を整形
 		opened.each(function(){
-			if ( $(this).find("small[style *= 'display: none']").length ) {
+			var $clone = $(this).clone();
+			$("#GM_fth_highlighted_threads").append($clone);
+
+			if ( $clone.find("small[style *= 'display: none']").length ) {
 				// 「合間合間に」NGスレは除去
-				$(this).remove();
 			} else {
-				if ( !$(this).children("small").length ) {	// 文字スレ
-					//console.log($(this).children("a").html());
-					//$(this).children("a").replaceWith("<div class='GM_fth_opened_caption'>" + $(this).html() + "</div>");
+				if ( !$clone.children("small").length ) {	// 文字スレ
+					//console.log($clone.children("a").html());
+					//$clone.children("a").replaceWith("<div class='GM_fth_opened_caption'>" + $clone.html() + "</div>");
 				} else {
-					$(this).children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_opened_caption'>" +
-																					  $(this).children("small").html() + "</div>");	// eslint-disable-line no-mixed-spaces-and-tabs
-					$(this).children("br").replaceWith();
+					$clone.children("small:not(.aima_aimani_generated)").replaceWith("<div class='GM_fth_opened_caption'>" +
+																					  $clone.children("small").html() + "</div>");	// eslint-disable-line no-mixed-spaces-and-tabs
+					$clone.children("br").replaceWith();
 				}
 				// 「合間合間に」のボタンを削除
-				$(this).children("small.aima_aimani_generated").replaceWith();
+				$clone.children("small.aima_aimani_generated").replaceWith();
+
+				// aタグがクリックされたらカタログのaタグをクリックする
+				$clone.children("a").click((e) => {
+					var origin_anchor = $(this).children("a:first").get(0);
+					if (origin_anchor) {
+						origin_anchor.click();
+						e.preventDefault();
+					}
+				});
 
 				// KOSHIANカタログマーカー改v2のマークを反映
-				if ($(this).attr("old")) {
-					$(this).replaceWith("<div class='GM_fth_opened' opened='true' old='true'>" + $(this).html() + "</div>");
+				if ($clone.attr("old")) {
+					$clone.wrap("<div class='GM_fth_opened' opened='true' old='true'>");
 				} else {
-					$(this).replaceWith("<div class='GM_fth_opened' opened='true'>" + $(this).html() + "</div>");
+					$clone.wrap("<div class='GM_fth_opened' opened='true'>");
 				}
+				$clone.children().unwrap();
 			}
 		});
 		var $fth_opened = $(".GM_fth_opened");
