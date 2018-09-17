@@ -717,6 +717,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			// ピックアップ既読スレ本文
 			".GM_fth_opened_caption {" +
 			"  font-size: small;" +
+			"}" +
+			// ピックアップ赤福既読スレレス数
+			".GM_fth_pickuped > a.akahuku_visited > font {" +
+			"  background-color: #eeaa88;" +
 			"}";
 		GM_addStyle(css);
 
