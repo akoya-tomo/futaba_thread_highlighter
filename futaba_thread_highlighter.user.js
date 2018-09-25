@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev18
+// @version     1.6.6rev19
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -570,6 +570,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			var attr = "";
 			if ($clone.attr("opened") == "true") attr = " opened='true'";
 			if ($clone.attr("old") == "true") attr += " old='true'";
+			// 赤福Extendedのマークを反映
+			if ($clone.attr("__age") == "9") attr += " __age='9'";
 			$clone.wrap("<div class='GM_fth_pickuped'" + attr + ">");
 			$clone.children().unwrap();
 
@@ -644,11 +646,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				});
 
 				// KOSHIANカタログマーカー改v2のマークを反映
-				if ($clone.attr("old")) {
-					$clone.wrap("<div class='GM_fth_opened' opened='true' old='true'>");
-				} else {
-					$clone.wrap("<div class='GM_fth_opened' opened='true'>");
-				}
+				var attr = "";
+				if ($clone.attr("opened") == "true") attr = " opened='true'";
+				if ($clone.attr("old") == "true") attr += " old='true'";
+				// 赤福Extendedのマークを反映
+				if ($clone.attr("__age") == "9") attr += " __age='9'";
+				$clone.wrap("<div class='GM_fth_opened'" + attr + ">");
 				$clone.children().unwrap();
 			}
 		});
@@ -721,6 +724,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			// ピックアップ赤福既読スレレス数
 			".GM_fth_pickuped > a.akahuku_visited > font {" +
 			"  background-color: #eeaa88;" +
+			"}" +
+			// ピックアップ赤福古いスレ
+			"#GM_fth_highlighted_threads > div[__age='9'] {" +
+			"  border: solid 2px red;" +
 			"}";
 		GM_addStyle(css);
 
