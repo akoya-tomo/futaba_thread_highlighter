@@ -61,6 +61,8 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev19 2018-09-26
+  - 赤福Extendedの古いスレのマークをピックアップに反映するように修正
 * v1.6.6rev18 2018-09-18
   - 赤福Extendedで既に開いているスレをピックアップから開いたときに別のタブで開かないように修正
   - キーワードでピックアップしたスレに赤福Extendedの既読マークが反映されるように修正
