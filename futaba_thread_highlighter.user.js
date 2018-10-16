@@ -566,12 +566,16 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 			});
 
-			// KOSHIANカタログマーカー改v2のマークを反映
 			var attr = "";
+			// KOSHIANカタログマーカー改v2のマークを反映
 			if ($clone.attr("opened") == "true") attr = " opened='true'";
 			if ($clone.attr("old") == "true") attr += " old='true'";
 			// 赤福Extendedのマークを反映
-			if ($clone.attr("__age") == "9") attr += " __age='9'";
+			var age = $clone.attr("__age");
+			if (typeof age !== "undefined" && age !== false ) attr += ` __age=${age}`;
+			var preserved = $clone.attr("__preserved");
+			if (typeof preserved !== "undefined" && preserved !== false ) attr += ` __preserved=${preserved}`;
+
 			$clone.wrap("<div class='GM_fth_pickuped'" + attr + ">");
 			$clone.children().unwrap();
 
@@ -645,12 +649,16 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					}
 				});
 
-				// KOSHIANカタログマーカー改v2のマークを反映
 				var attr = "";
+				// KOSHIANカタログマーカー改v2のマークを反映
 				if ($clone.attr("opened") == "true") attr = " opened='true'";
 				if ($clone.attr("old") == "true") attr += " old='true'";
 				// 赤福Extendedのマークを反映
-				if ($clone.attr("__age") == "9") attr += " __age='9'";
+				var age = $clone.attr("__age");
+				if (typeof age !== "undefined" && age !== false ) attr += ` __age=${age}`;
+				var preserved = $clone.attr("__preserved");
+				if (typeof preserved !== "undefined" && preserved !== false ) attr += ` __preserved=${preserved}`;
+	
 				$clone.wrap("<div class='GM_fth_opened'" + attr + ">");
 				$clone.children().unwrap();
 			}
@@ -726,8 +734,21 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"  background-color: #eeaa88;" +
 			"}" +
 			// ピックアップ赤福古いスレ
-			"#GM_fth_highlighted_threads > div[__age='9'] {" +
+			"#GM_fth_highlighted_threads > div[__age='9']:not([__preserved]) {" +
 			"  border: solid 2px red;" +
+			"}" +
+			"#GM_fth_highlighted_threads > div[__age='9'][__preserved='0'] {" +
+			"  border: solid 2px red;" +
+			"}" +
+			"#GM_fth_highlighted_threads > div[__age='10'][__preserved='0'] {" +
+			"  border: solid 2px red;" +
+			"}" +
+			// ピックアップ赤福消滅スレ
+			"#GM_fth_highlighted_threads > div[__age='10']:not([__preserved]) {" +
+			"  border: dotted 2px #800;" +
+			"}" +
+			"#GM_fth_highlighted_threads > div[__age='-1'] {" +
+			"  border: dotted 2px #800;" +
 			"}";
 		GM_addStyle(css);
 
