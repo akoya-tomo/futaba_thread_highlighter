@@ -54,7 +54,8 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
 * futaba\_catalog\_mod（モダンバージョン）使用時にKOSHIAN カタログマーカー 改のマークが付かないときは[こちら](https://github.com/akoya-tomo/koshian_catalog_marker_kai#注意事項)を参照してください。  
 
 ## Tips
-スレ本文の文字数を増やしたらカタログが見づらくて生きるのが辛い場合  
+スレ本文の文字数を増やしたらカタログが見づらくて生きるのが辛い場合、  
+スレ本文のサイズを制限してマウスオーバーでポップアップ表示ができる  
 himuro\_majika氏作のユーザースタイルシートも使ってみてください。  
 [futaba\_catalog\_mod(モダンバージョン)](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)  
 または  
