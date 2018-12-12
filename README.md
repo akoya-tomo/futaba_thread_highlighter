@@ -7,7 +7,7 @@ Firefoxの場合、[Tampermonkey](https://addons.mozilla.org/ja/firefox/addon/ta
 (GreasemonkeyやViolentmonkeyでの動作は未確認です)  
 Chromeの場合、[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)を先にインスールしてからスクリプトをインストールして下さい。  
 
-※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Extended・赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
+※このUserscriptは単体で利用可能ですが、Firefoxアドオン[KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)・[赤福Extended・赤福Firefox sp](http://toshiakisp.github.io/akahuku-firefox-sp/)またはChromeアドオン[ふたクロ](http://futakuro.com/)のいずれかと併用することで既読スレピックアップ機能が利用できます。  
 オリジナル版[KOSHIAN カタログマーカー](https://addons.mozilla.org/ja/firefox/addon/koshian-catalog-marker/)のv2.0.0以降では既読スレピックアップ機能は動作しません。  
 
 ※その他のふたば閲覧支援ツールは[こちら](https://github.com/akoya-tomo/futaba_auto_reloader_K/wiki/)。
@@ -41,15 +41,21 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
 
 * USE\_BOARD\_NAME : タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する \(*true*\)  
 * USE\_PICKUP\_OPENED\_THREAD : 既読ピックアップ機能を使用する \(*true*\)  
-  - [KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)の他に[赤福Extended・赤福Firefox SP](http://toshiakisp.github.io/akahuku-firefox-sp/)・[ふたクロ](http://futakuro.com/)でも動作します。
+  - [KOSHIAN カタログマーカー 改](https://github.com/akoya-tomo/koshian_catalog_marker_kai)の他に[赤福Extended・赤福Firefox sp](http://toshiakisp.github.io/akahuku-firefox-sp/)・[ふたクロ](http://futakuro.com/)でも動作します。
 * OPENED\_THREAD\_MARKER\_STYLE : 既読マークのスタイル \(*""*\)  
-  - 通常はアドオンが既読マークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。また赤福ではマークのスタイルがコピーできないため、変数横のコメントを参考にスタイルを設定して下さい。  
+  - 通常はアドオンが既読マークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。  
 * HIDE\_FUTAKURO\_SEARCHBAR : ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を隠した状態でカタログを開く \(*true*\)  
 * USE\_FUTABA\_CATALOG\_MOD : futaba_catalog_modを使用する \(*false*\)  
   - himuro_majika氏作のユーザースタイルシートfutaba_catalog_mod（[モダンバージョン](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)）（[クラシックバージョン](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)）を使用するときは設定をtrueにして下さい。ピックアップしたスレの本文の長さを制限し、マウスオーバーで本文をポップアップします。  
+* \(New\) MARK\_AKAHUKU\_VISITED : 赤福extended・赤福Firefox spの既読スレの背景をマークする \(*false*\)  
+  - 赤福extended・赤福Firefox spでカタログ内の既読スレの背景全体をマークします。  
+  - ねないこの「カタログの既読状況を色分けする」が有効のときは本設定を`false`にしてください。  
+* \(New\) AKAHUKU_VISITED_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
+  - MARK\_AKAHUKU\_VISITEDが`true`のときにマークする背景色を設定します。  
+
 
 ## 注意事項
-* 既読スレのピックアップをしない（できない）場合はスクリプト内の設定USE\_PICKUP\_OPENED\_THREADをfalseにしてください。
+* 既読スレのピックアップをしない（できない）場合はスクリプト内の設定USE\_PICKUP\_OPENED\_THREADを`false`にしてください。
 * Firefoxアドオン[ねないこ](http://nenaiko.sakura.ne.jp/nenaiko/)と併用する場合は、ねないこの設定より「カタログ2」→「カタログ本文のスタイルを指定する」のチェックを外してください。
 * futaba\_catalog\_mod（モダンバージョン）使用時にKOSHIAN カタログマーカー 改のマークが付かないときは[こちら](https://github.com/akoya-tomo/koshian_catalog_marker_kai#注意事項)を参照してください。  
 
@@ -62,6 +68,9 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev21 2018-12-13
+  - 赤福extended・赤福Firefox spで既読スレの背景をマークする機能を追加
+  - 既読スレのマークスタイルが未設定かつ既読マークが取得できないときは赤福既読スレの背景色でピックアップした既読スレをマークするように修正
 * v1.6.6rev20 2018-10-16
   - ピックアップしたスレに赤福Extendedの古いスレのマークをする条件を修正
 * v1.6.6rev19 2018-09-26
