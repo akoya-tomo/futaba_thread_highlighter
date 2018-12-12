@@ -632,6 +632,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		// OPENED_THREAD_MARKER_STYLEが未設定でKOSHIANカタログマーカー改v2以外のマークならスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
 			openedThreadCssText = opened.get(0).style.cssText;
+			if (!openedThreadCssText) {
+				// スタイルを取得できなかったときはAKAHUKU_VISITED_COLORの背景色をセット
+				openedThreadCssText = "background-color: " + AKAHUKU_VISITED_COLOR + ";";
+			}
 			setOpenedThreadStyle();
 		}
 
@@ -815,11 +819,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 * ピックアップ既読スレスタイル設定
 	 */
 	function setOpenedThreadStyle() {
-		var openedThreadCss =
+		var css =
 			".GM_fth_opened {" +
 			openedThreadCssText +
 			"}";
-		GM_addStyle(openedThreadCss);
+		GM_addStyle(css);
 	}
 
 	/*
