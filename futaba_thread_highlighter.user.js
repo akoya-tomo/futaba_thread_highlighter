@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev20
+// @version     1.6.6rev21
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -26,6 +26,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var OPENED_THREAD_MARKER_STYLE = "";		// 開いたスレのマークのスタイル設定（例："background-color:#ffcc99"）
 	var HIDE_FUTAKURO_SEARCHBAR = true;			// ふたば@アプリ としあき(仮) 出張版のキーワード検索バーを隠した状態でカタログを開く
 	var USE_FUTABA_CATALOG_MOD = false;			// futaba catalog modを使用する
+	var MARK_AKAHUKU_VISITED = false;			// 赤福の既読スレの背景をマークする
+	var AKAHUKU_VISITED_COLOR = "#ffcc99";		// 赤福の既読スレの背景色
 
 	var serverName = document.domain.match(/^[^.]+/);
 	var pathName = location.pathname.match(/[^/]+/);
@@ -50,6 +52,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		makecontainer();
 		makeConfigUI();
 		highlight();
+		mark_akahuku_visited();
 		pickup_opened_threads();
 		notifyPickup();
 		check_opened_threads_mark();
@@ -420,6 +423,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						if(status === "" || status == "完了しました") {
 							clearInterval(timer);
 							highlight();
+							mark_akahuku_visited();
 							pickup_opened_threads();
 							check_opened_threads_mark();
 							notifyPickup();
@@ -451,6 +455,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 				timerMutated = setTimeout(function() {
 					highlight();
+					mark_akahuku_visited();
 					pickup_opened_threads();
 					notifyPickup();
 				}, 200);
@@ -591,6 +596,15 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 
 	/*
+	 * 赤福既読スレをマーク
+	 */
+	function mark_akahuku_visited() {
+		if (!MARK_AKAHUKU_VISITED) return;
+		$("td:has('a.akahuku_visited')").css("background-color", AKAHUKU_VISITED_COLOR);
+		$("td:has('a:visited')").css("background-color", AKAHUKU_VISITED_COLOR);
+	}
+
+	/*
 	 * 既読スレを先頭にピックアップ
 	 */
 	function pickup_opened_threads() {
@@ -618,6 +632,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		// OPENED_THREAD_MARKER_STYLEが未設定でKOSHIANカタログマーカー改v2以外のマークならスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
 			openedThreadCssText = opened.get(0).style.cssText;
+			if (!openedThreadCssText) {
+				// スタイルを取得できなかったときはAKAHUKU_VISITED_COLORの背景色をセット
+				openedThreadCssText = "background-color: " + AKAHUKU_VISITED_COLOR + ";";
+			}
 			setOpenedThreadStyle();
 		}
 
@@ -750,48 +768,62 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"#GM_fth_highlighted_threads > div[__age='-1'] {" +
 			"  border: dotted 2px #800;" +
 			"}";
+
+		if (USE_FUTABA_CATALOG_MOD) {
+			css +=
+				// ピックアップスレ本文
+				".GM_fth_pickuped_caption," +
+				".GM_fth_opened_caption," +
+				".GM_fth_pickuped > a > small," +
+				".GM_fth_opened > a > small {" +
+				"  display: block !important;" +
+				"  max-width: 70px !important;" +
+				"  max-height: 15px !important;" +
+				"  overflow: hidden !important;" +
+				"  word-wrap: break-word;" +
+				"}" +
+				// ピックアップスレ本文ホバー
+				".GM_fth_pickuped_caption:hover," +
+				".GM_fth_opened_caption:hover," +
+				".GM_fth_pickuped > a > small:hover," +
+				".GM_fth_opened > a > small:hover {" +
+				"  max-height: inherit !important;" +
+				"  max-width: inherit !important;" +
+				"  background-color: #ffdfe9 !important;" +
+				"  border: dotted 1px #CC33CC !important;" +
+				"  padding: 3px !important;" +
+				"  z-index: 1000 !important;" +
+				"  position: absolute !important;" +
+				"  transition: all 0.2s ease 0.2s !important;" +
+				"}";
+		}
+
+		if (MARK_AKAHUKU_VISITED) {
+			css +=
+				// 赤福既読スレ
+				"td[__opened] {" +
+				"  background-color: " + AKAHUKU_VISITED_COLOR + ";" +
+				"}" +
+				// 赤福既読スレ レス数
+				"td:not(.GM_fth_highlighted) a.akahuku_visited font," +
+				"td:not(.GM_fth_highlighted) a:visited font," +
+				"td[__opened]:not(.GM_fth_highlighted) a font {" +
+				"  background-color: transparent !important;" +
+				"}";
+		}
+
 		GM_addStyle(css);
-
-		if (!USE_FUTABA_CATALOG_MOD) return;
-
-		var futaba_catalog_mod_css =
-			// ピックアップスレ本文
-			".GM_fth_pickuped_caption," +
-			".GM_fth_opened_caption," +
-			".GM_fth_pickuped > a > small," +
-			".GM_fth_opened > a > small {" +
-			"  display: block !important;" +
-			"  max-width: 70px !important;" +
-			"  max-height: 15px !important;" +
-			"  overflow: hidden !important;" +
-			"  word-wrap: break-word;" +
-			"}" +
-			// ピックアップスレ本文ホバー
-			".GM_fth_pickuped_caption:hover," +
-			".GM_fth_opened_caption:hover," +
-			".GM_fth_pickuped > a > small:hover," +
-			".GM_fth_opened > a > small:hover {" +
-			"  max-height: inherit !important;" +
-			"  max-width: inherit !important;" +
-			"  background-color: #ffdfe9 !important;" +
-			"  border: dotted 1px #CC33CC !important;" +
-			"  padding: 3px !important;" +
-			"  z-index: 1000 !important;" +
-			"  position: absolute !important;" +
-			"  transition: all 0.2s ease 0.2s !important;" +
-			"}";
-		GM_addStyle(futaba_catalog_mod_css);
 	}
 
 	/*
 	 * ピックアップ既読スレスタイル設定
 	 */
 	function setOpenedThreadStyle() {
-		var openedThreadCss =
+		var css =
 			".GM_fth_opened {" +
 			openedThreadCssText +
 			"}";
-		GM_addStyle(openedThreadCss);
+		GM_addStyle(css);
 	}
 
 	/*
