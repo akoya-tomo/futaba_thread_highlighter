@@ -37,7 +37,7 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
 
 
 ## 設定
-機能の動作はスクリプト冒頭の大文字変数をエディタで編集すれば変更することができます。  
+機能の動作はスクリプト冒頭の大文字変数をエディタで編集すれば変更することができます。（カッコ内は初期値）  
 
 * USE\_BOARD\_NAME : タイトルを板名＋ソート名（カタログ・新順・古順etc）に変更する \(*true*\)  
 * USE\_PICKUP\_OPENED\_THREAD : 既読ピックアップ機能を使用する \(*true*\)  
@@ -50,7 +50,7 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
 * \(New\) MARK\_AKAHUKU\_VISITED : 赤福extended・赤福Firefox spの既読スレの背景をマークする \(*false*\)  
   - 赤福extended・赤福Firefox spでカタログ内の既読スレの背景全体をマークします。  
   - ねないこの「カタログの既読状況を色分けする」が有効のときは本設定を`false`にしてください。  
-* \(New\) AKAHUKU_VISITED_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
+* \(New\) AKAHUKU\_VISITED\_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
   - MARK\_AKAHUKU\_VISITEDが`true`のときにマークする背景色を設定します。  
 
 
