@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev21
+// @version     1.6.6rev22
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -389,7 +389,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	}
 
 	/*
-	 * 赤福の動的リロードの状態を取得
+	 * 動的リロードの状態を取得
 	 */
 	function check_akahuku_reload() {
 		var target = $("html > body").get(0);
@@ -416,7 +416,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						setTitle();
 					}
 				}
-				else if (nodes.attr("border") == "1") {
+				else if (nodes.attr("border") == "1" && $("#akahuku_catalog_reload_status").length) {
+					// 赤福
 					if ($("body").attr("__fcn_catalog_visibility") == "hidden") $("#GM_fth_highlighted_threads").css("visibility", "hidden");
 					var timer = setInterval(function() {
 						var status = $("#akahuku_catalog_reload_status").text();
@@ -433,6 +434,15 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			});
 		});
 		observer.observe(target, config);
+
+		// KOSHIAN
+		document.addEventListener("KOSHIAN_cat_reload", () => {
+			if ($("body").attr("__fcn_catalog_visibility") == "hidden") $("#GM_fth_highlighted_threads").css("visibility", "hidden");
+			highlight();
+			pickup_opened_threads();
+			check_opened_threads_mark();
+			notifyPickup();
+		});
 	}
 
 	/*

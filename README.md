@@ -47,10 +47,10 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
 * HIDE\_FUTAKURO\_SEARCHBAR : ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を隠した状態でカタログを開く \(*true*\)  
 * USE\_FUTABA\_CATALOG\_MOD : futaba_catalog_modを使用する \(*false*\)  
   - himuro_majika氏作のユーザースタイルシートfutaba_catalog_mod（[モダンバージョン](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)）（[クラシックバージョン](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)）を使用するときは設定をtrueにして下さい。ピックアップしたスレの本文の長さを制限し、マウスオーバーで本文をポップアップします。  
-* \(New\) MARK\_AKAHUKU\_VISITED : 赤福extended・赤福Firefox spの既読スレの背景をマークする \(*false*\)  
+* MARK\_AKAHUKU\_VISITED : 赤福extended・赤福Firefox spの既読スレの背景をマークする \(*false*\)  
   - 赤福extended・赤福Firefox spでカタログ内の既読スレの背景全体をマークします。  
   - ねないこの「カタログの既読状況を色分けする」が有効のときは本設定を`false`にしてください。  
-* \(New\) AKAHUKU\_VISITED\_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
+* AKAHUKU\_VISITED\_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
   - MARK\_AKAHUKU\_VISITEDが`true`のときにマークする背景色を設定します。  
 
 
@@ -68,6 +68,8 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev22 2019-05-15
+  - [KOSHIAN リロード拡張 改](https://github.com/akoya-tomo/koshian_reload_futaba_kai/)のカタログリロードに対応
 * v1.6.6rev21 2018-12-13
   - 赤福extended・赤福Firefox spで既読スレの背景をマークする機能を追加
   - 既読スレのマークスタイルが未設定かつ既読マークが取得できないときは赤福既読スレの背景色でピックアップした既読スレをマークするように修正
