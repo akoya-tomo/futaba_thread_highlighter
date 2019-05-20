@@ -442,6 +442,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			pickup_opened_threads();
 			check_opened_threads_mark();
 			notifyPickup();
+			setTitle();
 		});
 	}
 
@@ -841,7 +842,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function setTitle() {
 		if (USE_BOARD_NAME) {
-			var selectName = $("body > b > a").text();
+			var selectName = $("#KOSHIAN_reload_cat_bold").text() || $("body > b > a").text();
 
 			if(boardName == "二次元裏"){
 				boardName = serverName;
