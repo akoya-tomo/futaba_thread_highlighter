@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev22
+// @version     1.6.6rev23
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -442,6 +442,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			pickup_opened_threads();
 			check_opened_threads_mark();
 			notifyPickup();
+			setTitle();
 		});
 	}
 
@@ -841,7 +842,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function setTitle() {
 		if (USE_BOARD_NAME) {
-			var selectName = $("body > b > a").text();
+			var selectName = $("#KOSHIAN_reload_cat_bold").text() || $("body > b > a").text();
 
 			if(boardName == "二次元裏"){
 				boardName = serverName;
