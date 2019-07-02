@@ -397,17 +397,18 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ($("#cat_search").length) {
 			// ふたクロ
 			highlight();
-			target = $("html > body > table[border]").get(0);
+			target = $("#cattable").get(0);
 			config = { attributes: true , attributeFilter: ["style"] };
 		}
 		var observer = new MutationObserver(function(mutations) {
+			var isFutakuro = $("#cat_search").length > 0;
+			var isAkahuku = $("#akahuku_catalog_reload_status").length > 0;
 			mutations.forEach(function(mutation) {
-				var nodes = $(mutation.addedNodes);
-				if ($("#cat_search").length) {
+				if (isFutakuro) {
 					// ふたクロ
 					if (mutation.target.attributes.style.nodeValue == "opacity: 0;") {
 						opacityZero = true;
-					} else if (opacityZero) {
+					} else if (opacityZero && mutation.target.attributes.style.nodeValue != "opacity: 0;") {
 						opacityZero = false;
 						highlight();
 						pickup_opened_threads();
@@ -415,21 +416,25 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 						notifyPickup();
 						setTitle();
 					}
-				}
-				else if (nodes.attr("border") == "1" && $("#akahuku_catalog_reload_status").length) {
+				} else if (isAkahuku) {
 					// 赤福
-					if ($("body").attr("__fcn_catalog_visibility") == "hidden") $("#GM_fth_highlighted_threads").css("visibility", "hidden");
-					var timer = setInterval(function() {
-						var status = $("#akahuku_catalog_reload_status").text();
-						if(status === "" || status == "完了しました") {
-							clearInterval(timer);
-							highlight();
-							mark_akahuku_visited();
-							pickup_opened_threads();
-							check_opened_threads_mark();
-							notifyPickup();
+					var nodes = $(mutation.addedNodes);
+					if (nodes.attr("border") == "1") {
+						if ($("body").attr("__fcn_catalog_visibility") == "hidden") {
+							$("#GM_fth_highlighted_threads").css("visibility", "hidden");
 						}
-					}, 10);
+						var timer = setInterval(function() {
+							var status = $("#akahuku_catalog_reload_status").text();
+							if(status === "" || status == "完了しました") {
+								clearInterval(timer);
+								highlight();
+								mark_akahuku_visited();
+								pickup_opened_threads();
+								check_opened_threads_mark();
+								notifyPickup();
+							}
+						}, 10);
+					}
 				}
 			});
 		});
