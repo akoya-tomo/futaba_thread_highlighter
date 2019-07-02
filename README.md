@@ -68,6 +68,9 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev24 2019-07-02
+  - リロードの監視を修正
+  - 既読スレのマークの監視を修正
 * v1.6.6rev23 2019-05-20
   - KOSHIAN リロード拡張 改のページ更新せずに「多順」「勢順」などに切り替えする機能に対応
 * v1.6.6rev22 2019-05-15
