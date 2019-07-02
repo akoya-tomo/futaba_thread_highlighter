@@ -143,7 +143,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ($("#GM_fcn_ng_menubar").length) {
 			$pickup_thread_area = $("#GM_fcn_ng_menubar");
 		} else {
-			$("body > table[border]").before($pickup_thread_area);
+			$("#cattable").before($pickup_thread_area);
 		}
 
 		var $container_header = $("<span>", {
@@ -182,7 +182,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				"background-color": "",
 			}
 		});
-		if ($("body").attr("__fcn_catalog_visibility") == "hidden") $pickup_thread_container.css("visibility", "hidden");
+		if ($("body").attr("__fcn_catalog_visibility") == "hidden") {
+			$pickup_thread_container.css("visibility", "hidden");
+		}
 		$pickup_thread_area.after($pickup_thread_container);
 	}
 
@@ -345,7 +347,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 * ふたば@アプリ としあき(仮) 出張版のキーワード検索バーの表示制御
 	 */
 	function futakuroSearchBarDispCtrl() {
-		if (!$("#inputSearch").length) return;
+		if (!$("#inputSearch").length) {
+			return;
+		}
 		$("#inputSearch,#inputSearch+div").wrapAll("<div class='fth_futakuro_searchbar'>");
 		var $futakuro_searchbar_button_header = $("<span>", {
 			id: "GM_fth_futakuro_searchbar_button_header",
@@ -441,8 +445,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		observer.observe(target, config);
 
 		// KOSHIAN
-		document.addEventListener("KOSHIAN_cat_reload", () => {
-			if ($("body").attr("__fcn_catalog_visibility") == "hidden") $("#GM_fth_highlighted_threads").css("visibility", "hidden");
+		$(document).on("KOSHIAN_cat_reload", () => {
+			if ($("body").attr("__fcn_catalog_visibility") == "hidden") {
+				$("#GM_fth_highlighted_threads").css("visibility", "hidden");
+			}
 			highlight();
 			pickup_opened_threads();
 			check_opened_threads_mark();
@@ -455,12 +461,16 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 * 既読スレのマークの状態を取得
 	 */
 	function check_opened_threads_mark() {
-		if (!USE_PICKUP_OPENED_THREAD) return;
+		if (!USE_PICKUP_OPENED_THREAD) {
+			return;
+		}
 
 		var target = $("#cattable td");
 		var config = { attributes: true , attributeFilter: ["style"] };
 		// オブザーバインスタンスが既にあれば事前に解除
-		if (openedThreadObserver) openedThreadObserver.disconnect();
+		if (openedThreadObserver) {
+			openedThreadObserver.disconnect();
+		}
 
 		openedThreadObserver = new MutationObserver(function() {
 			//console.log("futaba_thread_highlighter : target mutated");
@@ -476,15 +486,15 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				notifyPickup();
 			}, 200);
 		});
-		for (var i = 0; i < target.length; i++) {
+		for (var i = 0; i < target.length; ++i) {
 			openedThreadObserver.observe(target[i], config);
 		}
 
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読マーク
 			target = $("#cattable td a[style]");
-			config = { attributes: true , attributeFilter: ["class"] };
-			for (var j = 0; j < target.length; j++) {
+			config = { attributes: true, attributeFilter: ["class"] };
+			for (var j = 0; j < target.length; ++j) {
 				openedThreadObserver.observe(target[j], config);
 			}
 		}
@@ -518,11 +528,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 		if( words !== "" ) {
 			removeOldHighlighted();
-			$("body > table[border] td small").each(function(){
+			$("#cattable td small").each(function() {
 				if( $(this).text().match(re) &&
-					( ($(this).parent("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1 ) &&	// 「futaba catalog NG」NGスレ
-					( ($(this).parent("td").attr("style") + "").indexOf("display: none") == -1 ) &&	// NGスレ
-					( ($(this).attr("style") + "").indexOf("display: none") == -1 )) {				// 「合間合間に」NGスレ
+					($(this).parent("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&		// 「futaba catalog NG」NGスレ
+					($(this).parent("td").attr("style") + "").indexOf("display: none") == -1  &&	// NGスレ
+					($(this).attr("style") + "").indexOf("display: none") == -1 ) {					// 「合間合間に」NGスレ
 					if ( !$(this).children(".GM_fth_matchedword").length ) {
 						$(this).html($(this).html().replace(re,
 							"<span class='GM_fth_matchedword'>" +
@@ -560,7 +570,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_pickuped").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_pickuped").remove();
 		}
-		var highlighted = $("body > table .GM_fth_highlighted:not([class *= 'GM_fcn_ng_'])");
+		var highlighted = $("#cattable .GM_fth_highlighted:not([class *= 'GM_fcn_ng_'])");
 		// 要素の中身を整形
 		highlighted.each(function(){
 			var $clone = $(this).clone();
@@ -588,13 +598,21 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 			var attr = "";
 			// KOSHIANカタログマーカー改v2のマークを反映
-			if ($clone.attr("opened") == "true") attr = " opened='true'";
-			if ($clone.attr("old") == "true") attr += " old='true'";
+			if ($clone.attr("opened") == "true") {
+				attr = " opened='true'";
+			}
+			if ($clone.attr("old") == "true") {
+				attr += " old='true'";
+			}
 			// 赤福Extendedのマークを反映
 			var age = $clone.attr("__age");
-			if (typeof age !== "undefined" && age !== false ) attr += ` __age=${age}`;
+			if (typeof age !== "undefined" && age !== false ) {
+				attr += ` __age=${age}`;
+			}
 			var preserved = $clone.attr("__preserved");
-			if (typeof preserved !== "undefined" && preserved !== false ) attr += ` __preserved=${preserved}`;
+			if (typeof preserved !== "undefined" && preserved !== false ) {
+				attr += ` __preserved=${preserved}`;
+			}
 
 			$clone.wrap("<div class='GM_fth_pickuped'" + attr + ">");
 			$clone.children().unwrap();
@@ -614,7 +632,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 * 赤福既読スレをマーク
 	 */
 	function mark_akahuku_visited() {
-		if (!MARK_AKAHUKU_VISITED) return;
+		if (!MARK_AKAHUKU_VISITED) {
+			return;
+		}
 		$("td:has('a.akahuku_visited')").css("background-color", AKAHUKU_VISITED_COLOR);
 		$("td:has('a:visited')").css("background-color", AKAHUKU_VISITED_COLOR);
 	}
@@ -623,7 +643,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 * 既読スレを先頭にピックアップ
 	 */
 	function pickup_opened_threads() {
-		if (!USE_PICKUP_OPENED_THREAD) return;
+		if (!USE_PICKUP_OPENED_THREAD) {
+			return;
+		}
 
 		var Start = new Date().getTime();	// count parsing time
 		// ピックアップに既読スレがあればクリア
@@ -639,10 +661,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"[class *= 'GM_fcn_ng_']";				// futaba catalog NG
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読スレ
-			opened = $("body > table td:has('a.akahuku_visited'):not(" + filter + ")");
+			opened = $("#cattable td:has('a.akahuku_visited'):not(" + filter + ")");
 		} else {
 			// 既読スレ
-			opened = $("body > table td[style]:not(" + filter +")");
+			opened = $("#cattable td[style]:not(" + filter +")");
 		}
 		// OPENED_THREAD_MARKER_STYLEが未設定でKOSHIANカタログマーカー改v2以外のマークならスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
@@ -684,13 +706,21 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 				var attr = "";
 				// KOSHIANカタログマーカー改v2のマークを反映
-				if ($clone.attr("opened") == "true") attr = " opened='true'";
-				if ($clone.attr("old") == "true") attr += " old='true'";
+				if ($clone.attr("opened") == "true") {
+					attr = " opened='true'";
+				}
+				if ($clone.attr("old") == "true") {
+					attr += " old='true'";
+				}
 				// 赤福Extendedのマークを反映
 				var age = $clone.attr("__age");
-				if (typeof age !== "undefined" && age !== false ) attr += ` __age=${age}`;
+				if (typeof age !== "undefined" && age !== false ) {
+					attr += ` __age=${age}`;
+				}
 				var preserved = $clone.attr("__preserved");
-				if (typeof preserved !== "undefined" && preserved !== false ) attr += ` __preserved=${preserved}`;
+				if (typeof preserved !== "undefined" && preserved !== false ) {
+					attr += ` __preserved=${preserved}`;
+				}
 	
 				$clone.wrap("<div class='GM_fth_opened'" + attr + ">");
 				$clone.children().unwrap();
@@ -712,7 +742,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	 */
 	function notifyPickup() {
 		document.dispatchEvent(new CustomEvent("FutabaTH_pickup"));
-		if ($("body").attr("__fcn_catalog_visibility") == "visible") $("#GM_fth_highlighted_threads").css("visibility", "visible");
+		if ($("body").attr("__fcn_catalog_visibility") == "visible") {
+			$("#GM_fth_highlighted_threads").css("visibility", "visible");
+		}
 		//console.log('futaba_thread_highlighter: Notyfy pickup completed');
 	}
 
