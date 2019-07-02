@@ -587,6 +587,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			// 「合間合間に」のボタンを削除
 			$clone.children("small.aima_aimani_generated").replaceWith();
 
+			// 「KOSHIAN 画像をポップアップで表示 改」のポップアップを削除
+			$clone.children(".KOSHIAN_image_popup_container").replaceWith();
+
 			// aタグがクリックされたらカタログのaタグをクリックする
 			$clone.children("a").click((e) => {
 				var origin_anchor = $(this).children("a:first").get(0);
@@ -694,6 +697,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 				// 「合間合間に」のボタンを削除
 				$clone.children("small.aima_aimani_generated").replaceWith();
+
+				// 「KOSHIAN 画像をポップアップで表示 改」のポップアップを削除
+				$clone.children(".KOSHIAN_image_popup_container").replaceWith();
 
 				// aタグがクリックされたらカタログのaタグをクリックする
 				$clone.children("a").click((e) => {
