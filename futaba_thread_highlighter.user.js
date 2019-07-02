@@ -607,6 +607,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			if ($clone.attr("old") == "true") {
 				attr += " old='true'";
 			}
+			if ($clone.attr("new") == "true") {
+				attr += " new='true'";
+			}
 			// 赤福Extendedのマークを反映
 			var age = $clone.attr("__age");
 			if (typeof age !== "undefined" && age !== false ) {
@@ -717,6 +720,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				}
 				if ($clone.attr("old") == "true") {
 					attr += " old='true'";
+				}
+				if ($clone.attr("new") == "true") {
+					attr += " new='true'";
 				}
 				// 赤福Extendedのマークを反映
 				var age = $clone.attr("__age");
