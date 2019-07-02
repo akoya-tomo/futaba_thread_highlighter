@@ -457,25 +457,24 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	function check_opened_threads_mark() {
 		if (!USE_PICKUP_OPENED_THREAD) return;
 
-		var target = $("html > body table[border] td");
+		var target = $("#cattable td");
 		var config = { attributes: true , attributeFilter: ["style"] };
 		// オブザーバインスタンスが既にあれば事前に解除
 		if (openedThreadObserver) openedThreadObserver.disconnect();
 
-		openedThreadObserver = new MutationObserver(function(mutations) {
-			mutations.forEach(function() {
-				//console.log("futaba_thread_highlighter : target mutated");
-				if (timerMutated) {
-					clearTimeout(timerMutated);
-					timerMutated = null;
-				}
-				timerMutated = setTimeout(function() {
-					highlight();
-					mark_akahuku_visited();
-					pickup_opened_threads();
-					notifyPickup();
-				}, 200);
-			});
+		openedThreadObserver = new MutationObserver(function() {
+			//console.log("futaba_thread_highlighter : target mutated");
+			if (timerMutated) {
+				clearTimeout(timerMutated);
+				timerMutated = null;
+			}
+			timerMutated = setTimeout(function() {
+				timerMutated = null;
+				highlight();
+				mark_akahuku_visited();
+				pickup_opened_threads();
+				notifyPickup();
+			}, 200);
 		});
 		for (var i = 0; i < target.length; i++) {
 			openedThreadObserver.observe(target[i], config);
@@ -483,7 +482,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読マーク
-			target = $("html > body table[border] td a[style]");
+			target = $("#cattable td a[style]");
 			config = { attributes: true , attributeFilter: ["class"] };
 			for (var j = 0; j < target.length; j++) {
 				openedThreadObserver.observe(target[j], config);
