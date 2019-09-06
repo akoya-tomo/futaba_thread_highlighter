@@ -601,23 +601,30 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 			var attr = "";
 			// KOSHIANカタログマーカー改v2のマークを反映
-			if ($clone.attr("opened") == "true") {
-				attr = " opened='true'";
+			var attr_opened = $clone.attr("opened");
+			if (attr_opened && attr_opened != "false") {
+				attr = ` opened="${attr_opened}"`;
 			}
-			if ($clone.attr("old") == "true") {
-				attr += " old='true'";
+			var attr_old = $clone.attr("old");
+			if (attr_old) {
+				attr += ` old="${attr_old}"`;
 			}
-			if ($clone.attr("new") == "true") {
-				attr += " new='true'";
+			var attr_hold = $clone.attr("hold");
+			if (attr_hold) {
+				attr += ` hold="${attr_hold}"`;
+			}
+			var attr_new = $clone.attr("new");
+			if (attr_new && attr_new != "false") {
+				attr += ` new="${attr_new}"`;
 			}
 			// 赤福Extendedのマークを反映
-			var age = $clone.attr("__age");
-			if (typeof age !== "undefined" && age !== false ) {
-				attr += ` __age=${age}`;
+			var attr_age = $clone.attr("__age");
+			if (attr_age != null) {
+				attr += ` __age="${attr_age}"`;
 			}
-			var preserved = $clone.attr("__preserved");
-			if (typeof preserved !== "undefined" && preserved !== false ) {
-				attr += ` __preserved=${preserved}`;
+			var attr_preserved = $clone.attr("__preserved");
+			if (attr_preserved != null) {
+				attr += ` __preserved="${attr_preserved}"`;
 			}
 
 			$clone.wrap("<div class='GM_fth_pickuped'" + attr + ">");
@@ -715,25 +722,32 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 				var attr = "";
 				// KOSHIANカタログマーカー改v2のマークを反映
-				if ($clone.attr("opened") == "true") {
-					attr = " opened='true'";
+				var attr_opened = $clone.attr("opened");
+				if (attr_opened && attr_opened != "false") {
+					attr = ` opened="${attr_opened}"`;
 				}
-				if ($clone.attr("old") == "true") {
-					attr += " old='true'";
+				var attr_old = $clone.attr("old");
+				if (attr_old) {
+					attr += ` old="${attr_old}"`;
 				}
-				if ($clone.attr("new") == "true") {
-					attr += " new='true'";
+				var attr_hold = $clone.attr("hold");
+				if (attr_hold) {
+					attr += ` hold="${attr_hold}"`;
+				}
+				var attr_new = $clone.attr("new");
+				if (attr_new && attr_new != "false") {
+					attr += ` new="${attr_new}"`;
 				}
 				// 赤福Extendedのマークを反映
-				var age = $clone.attr("__age");
-				if (typeof age !== "undefined" && age !== false ) {
-					attr += ` __age=${age}`;
+				var attr_age = $clone.attr("__age");
+				if (attr_age != null) {
+					attr += ` __age="${attr_age}"`;
 				}
-				var preserved = $clone.attr("__preserved");
-				if (typeof preserved !== "undefined" && preserved !== false ) {
-					attr += ` __preserved=${preserved}`;
+				var attr_preserved = $clone.attr("__preserved");
+				if (attr_preserved != null) {
+					attr += ` __preserved="${attr_preserved}"`;
 				}
-	
+
 				$clone.wrap("<div class='GM_fth_opened'" + attr + ">");
 				$clone.children().unwrap();
 			}
