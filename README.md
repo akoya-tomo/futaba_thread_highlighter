@@ -68,6 +68,8 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev25 2019-09-06
+  - KOSHIAN カタログマーカー 改 v2.3.0以降のマークに対応
 * v1.6.6rev24 2019-07-02
   - リロードの監視を修正
   - 既読スレのマークの監視を修正
