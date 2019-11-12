@@ -646,8 +646,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			$clone.children(".KOSHIAN_image_popup_container").replaceWith();
 
 			// aタグがクリックされたらカタログのaタグをクリックする
-			$clone.children("a").click((e) => {
-				var origin_anchor = $(this).children("a:first").get(0);
+			$clone.find("a").click((e) => {
+				var origin_anchor = $(this).find("a:first").get(0);
 				if (origin_anchor) {
 					origin_anchor.click();
 					e.preventDefault();
@@ -770,8 +770,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				$clone.children(".KOSHIAN_image_popup_container").replaceWith();
 
 				// aタグがクリックされたらカタログのaタグをクリックする
-				$clone.children("a").click((e) => {
-					var origin_anchor = $(this).children("a:first").get(0);
+				$clone.find("a").click((e) => {
+					var origin_anchor = $(this).find("a:first").get(0);
 					if (origin_anchor) {
 						origin_anchor.click();
 						e.preventDefault();
