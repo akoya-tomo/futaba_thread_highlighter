@@ -119,6 +119,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		$("#GM_fth_config_container").fadeOut(100);
 		highlight(true);
 		pickup_opened_threads();
+		notifyPickup();
 		/*
 		 * 板毎の個別検索ワードを保存
 		 */
@@ -405,6 +406,8 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ($("#cat_search").length) {
 			// ふたクロ
 			highlight();
+			pickup_opened_threads();
+			notifyPickup();
 			target = $("#cattable").get(0);
 			config = { attributes: true , attributeFilter: ["style"] };
 		}
