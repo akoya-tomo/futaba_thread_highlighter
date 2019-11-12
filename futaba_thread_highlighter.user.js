@@ -500,7 +500,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			return;
 		}
 
-		var target = isNewLayout ? $("#cattable .cs") : $("#cattable td");
+		var target = isNewLayout ? $("#cattable > .cs") : $("#cattable td");
 		var config = { attributes: true , attributeFilter: ["style"] };
 		// オブザーバインスタンスが既にあれば事前に解除
 		if (openedThreadObserver) {
@@ -527,7 +527,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読マーク
-			target = isNewLayout ? $("#cattable .cs .cu a[style]") : $("#cattable td a[style]");
+			target = isNewLayout ? $("#cattable .cu a[style]") : $("#cattable td a[style]");
 			config = { attributes: true, attributeFilter: ["class"] };
 			for (var j = 0; j < target.length; ++j) {
 				openedThreadObserver.observe(target[j], config);
@@ -564,12 +564,12 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if( words !== "" ) {
 			removeOldHighlighted();
 			if (isNewLayout) {
-				$("#cattable .cu").each(function() {
+				$("#cattable > .cs").each(function() {
 					var matches = $(this).get(0).innerText.match(/([^\n]+)\n/);
 					if( matches && matches[1].match(re) &&
-						($(this).parent(".cs").attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&			// 「futaba catalog NG」NGスレ
-						($(this).parent(".cs").attr("style") + "").indexOf("display: none") == -1  &&		// NGスレ
-						($(this).children("small").attr("style") + "").indexOf("display: none") == -1 ) {	// 「合間合間に」NGスレ
+						($(this).attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&			// 「futaba catalog NG」NGスレ
+						($(this).attr("style") + "").indexOf("display: none") == -1  &&		// NGスレ
+						($(this).children("cu").children("small").attr("style") + "").indexOf("display: none") == -1 ) {	// 「合間合間に」NGスレ
 						/* 新レイアウトでは検索ワードのハイライトは無効
 						if ( !$(this).children(".GM_fth_matchedword").length ) {
 							$(this).html($(this).html().replace(re,
@@ -578,14 +578,14 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 								"</span>"));
 						}
 						*/
-						$(this).parent(".cs").addClass("GM_fth_highlighted");
+						$(this).addClass("GM_fth_highlighted");
 					}
 				});
 			} else {
 				$("#cattable td small").each(function() {
 					if( $(this).text().match(re) &&
-						($(this).parent("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&		// 「futaba catalog NG」NGスレ
-						($(this).parent("td").attr("style") + "").indexOf("display: none") == -1  &&	// NGスレ
+						($(this).closest("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&		// 「futaba catalog NG」NGスレ
+						($(this).closest("td").attr("style") + "").indexOf("display: none") == -1  &&	// NGスレ
 						($(this).attr("style") + "").indexOf("display: none") == -1 ) {					// 「合間合間に」NGスレ
 						if ( !$(this).children(".GM_fth_matchedword").length ) {
 							$(this).html($(this).html().replace(re,
@@ -640,10 +640,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				$clone.children("br").replaceWith();
 			}
 			// 「合間合間に」のボタンを削除
-			$clone.children("small.aima_aimani_generated").replaceWith();
+			$clone.find("small.aima_aimani_generated").replaceWith();
 
 			// 「KOSHIAN 画像をポップアップで表示 改」のポップアップを削除
-			$clone.children(".KOSHIAN_image_popup_container").replaceWith();
+			$clone.find(".KOSHIAN_image_popup_container").replaceWith();
 
 			// aタグがクリックされたらカタログのaタグをクリックする
 			$clone.find("a").click((e) => {
@@ -732,10 +732,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"[class *= 'GM_fcn_ng_']";				// futaba catalog NG
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読スレ
-			opened = isNewLayout ? $("#cattable .cs:has('a.akahuku_visited'):not(" + filter + ")") : $("#cattable td:has('a.akahuku_visited'):not(" + filter + ")");
+			opened = isNewLayout ? $("#cattable > .cs:has('a.akahuku_visited'):not(" + filter + ")") : $("#cattable td:has('a.akahuku_visited'):not(" + filter + ")");
 		} else {
 			// 既読スレ
-			opened = isNewLayout ? $("#cattable .cs[style]:not(" + filter +")") : $("#cattable td[style]:not(" + filter +")");
+			opened = isNewLayout ? $("#cattable > .cs[style]:not(" + filter +")") : $("#cattable td[style]:not(" + filter +")");
 		}
 		// OPENED_THREAD_MARKER_STYLEが未設定でKOSHIANカタログマーカー改v2以外のマークならスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
@@ -764,10 +764,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 					$clone.children("br").replaceWith();
 				}
 				// 「合間合間に」のボタンを削除
-				$clone.children("small.aima_aimani_generated").replaceWith();
+				$clone.find("small.aima_aimani_generated").replaceWith();
 
 				// 「KOSHIAN 画像をポップアップで表示 改」のポップアップを削除
-				$clone.children(".KOSHIAN_image_popup_container").replaceWith();
+				$clone.find(".KOSHIAN_image_popup_container").replaceWith();
 
 				// aタグがクリックされたらカタログのaタグをクリックする
 				$clone.find("a").click((e) => {
