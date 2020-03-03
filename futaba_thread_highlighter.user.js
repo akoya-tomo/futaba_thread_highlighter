@@ -4,7 +4,7 @@
 // @description スレ本文を検索してカタログでスレッド監視しちゃう
 // @include     http://*.2chan.net/*/futaba.php?mode=cat*
 // @include     https://*.2chan.net/*/futaba.php?mode=cat*
-// @version     1.6.6rev27
+// @version     1.6.6rev28
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 // @grant       GM_registerMenuCommand
 // @grant       GM_getValue
@@ -37,15 +37,11 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var opacityZero = false;
 	var openedThreadObserver;
 	var hideFutakuroSearchBar = HIDE_FUTAKURO_SEARCHBAR;
-	var timerMutated, timerAdded;
-	var isNewLayout = $("#cattable").length && $("#cattable").prop("tagName") != "TABLE";
+	var timerMutated;
 
 	$(init);
 
 	function init(){
-		if (isNewLayout) {
-			checkAddedThreads();
-		}
 		console.log("futaba_thread_highlighter commmon: " +	// eslint-disable-line no-console
 			GM_getValue("_futaba_thread_search_words", ""));
 		console.log("futaba_thread_highlighter indivisual: " +	// eslint-disable-line no-console
@@ -464,34 +460,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		});
 	}
 
-	/**
-	 * ふたばカタログの新レイアウトのスレ追加を検出
-	 */
-	function checkAddedThreads() {
-		var target = $("#cattable").get(0);
-		var config = { childList: true };
-		var observer = new MutationObserver(function(mutations) {
-			mutations.forEach(function(mutation) {
-				var $nodes = $(mutation.addedNodes);
-				if ($nodes.hasClass("cs")) {
-					if (timerAdded) {
-						clearTimeout(timerAdded);
-						timerAdded = null;
-					}
-					timerAdded = setTimeout(function() {
-						timerAdded = null;
-						highlight();
-						mark_akahuku_visited();
-						pickup_opened_threads();
-						check_opened_threads_mark();
-						notifyPickup();
-					}, 200);
-				}
-			});
-		});
-		observer.observe(target, config);
-	}
-
 	/*
 	 * 既読スレのマークの状態を取得
 	 */
@@ -500,7 +468,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			return;
 		}
 
-		var target = isNewLayout ? $("#cattable > .cs") : $("#cattable td");
+		var target = $("#cattable td");
 		var config = { attributes: true , attributeFilter: ["style"] };
 		// オブザーバインスタンスが既にあれば事前に解除
 		if (openedThreadObserver) {
@@ -527,7 +495,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読マーク
-			target = isNewLayout ? $("#cattable .cu a[style]") : $("#cattable td a[style]");
+			target = $("#cattable td a[style]");
 			config = { attributes: true, attributeFilter: ["class"] };
 			for (var j = 0; j < target.length; ++j) {
 				openedThreadObserver.observe(target[j], config);
@@ -563,44 +531,24 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		}
 		if( words !== "" ) {
 			removeOldHighlighted();
-			if (isNewLayout) {
-				$("#cattable > .cs").each(function() {
-					var matches = $(this).get(0).innerText.match(/([^\n]+)\n/);
-					if( matches && matches[1].match(re) &&
-						($(this).attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&			// 「futaba catalog NG」NGスレ
-						($(this).attr("style") + "").indexOf("display: none") == -1  &&		// NGスレ
-						($(this).children("cu").children("small").attr("style") + "").indexOf("display: none") == -1 ) {	// 「合間合間に」NGスレ
-						/* 新レイアウトでは検索ワードのハイライトは無効
-						if ( !$(this).children(".GM_fth_matchedword").length ) {
-							$(this).html($(this).html().replace(re,
-								"<span class='GM_fth_matchedword'>" +
-								$(this).text().match(re)[0] +
-								"</span>"));
-						}
-						*/
-						$(this).addClass("GM_fth_highlighted");
+			$("#cattable td small").each(function() {
+				if( $(this).text().match(re) &&
+					($(this).closest("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1 &&		// 「futaba catalog NG」NGスレ
+					($(this).closest("td").attr("style") + "").indexOf("display: none") == -1 &&	// NGスレ
+					($(this).attr("style") + "").indexOf("display: none") == -1 ) {					// 「合間合間に」NGスレ
+					if ( !$(this).children(".GM_fth_matchedword").length ) {
+						$(this).html($(this).html().replace(re,
+							"<span class='GM_fth_matchedword'>" +
+							$(this).text().match(re)[0] +
+							"</span>"));
 					}
-				});
-			} else {
-				$("#cattable td small").each(function() {
-					if( $(this).text().match(re) &&
-						($(this).closest("td").attr("class") + "").indexOf("GM_fcn_ng_") == -1  &&		// 「futaba catalog NG」NGスレ
-						($(this).closest("td").attr("style") + "").indexOf("display: none") == -1  &&	// NGスレ
-						($(this).attr("style") + "").indexOf("display: none") == -1 ) {					// 「合間合間に」NGスレ
-						if ( !$(this).children(".GM_fth_matchedword").length ) {
-							$(this).html($(this).html().replace(re,
-								"<span class='GM_fth_matchedword'>" +
-								$(this).text().match(re)[0] +
-								"</span>"));
-						}
-						if ( $(this).parent("a").length ) {		// 文字スレ
-							$(this).parent().parent("td").addClass("GM_fth_highlighted");
-						} else {
-							$(this).parent("td").addClass("GM_fth_highlighted");
-						}
+					if ( $(this).parent("a").length ) {		// 文字スレ
+						$(this).parent().parent("td").addClass("GM_fth_highlighted");
+					} else {
+						$(this).parent("td").addClass("GM_fth_highlighted");
 					}
-				});
-			}
+				}
+			});
 			pickup_highlighted();
 		}
 		else {
@@ -722,6 +670,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_opened").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
+		// 見歴または履歴なら終了
+		if (isHistory()) {
+			return;
+		}
 		// NGスレとピックアップ済みは除外
 		var opened;
 		var filter =
@@ -732,10 +684,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"[class *= 'GM_fcn_ng_']";				// futaba catalog NG
 		if ($(".akahuku_markup_catalog_table").length) {
 			// 赤福の既読スレ
-			opened = isNewLayout ? $("#cattable > .cs:has('a.akahuku_visited'):not(" + filter + ")") : $("#cattable td:has('a.akahuku_visited'):not(" + filter + ")");
+			opened = $("#cattable td:has('a.akahuku_visited'):not(" + filter + ")");
 		} else {
 			// 既読スレ
-			opened = isNewLayout ? $("#cattable > .cs[style]:not(" + filter +")") : $("#cattable td[style]:not(" + filter +")");
+			opened = $("#cattable td[style]:not(" + filter +")");
 		}
 		// OPENED_THREAD_MARKER_STYLEが未設定でKOSHIANカタログマーカー改v2以外のマークならスタイルをコピー
 		if (opened.length && !openedThreadCssText && !opened.first().attr("opened")) {
@@ -979,6 +931,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			}
 			document.title = boardName + " " + selectName;
 		}
+	}
+
+	/*
+	 * 見歴または履歴か
+	 */
+	function isHistory() {
+		let cat_bold = document.getElementById("KOSHIAN_reload_cat_bold");
+		if (cat_bold) {
+			return cat_bold.textContent.match(/見歴|履歴/);
+		} else {
+			let bold_a = document.querySelector("html > body > b > a");
+			if (bold_a) {
+				return bold_a.textContent.match(/見歴|履歴/);
+			}
+		}
+		return false;
 	}
 
 })(jQuery);
