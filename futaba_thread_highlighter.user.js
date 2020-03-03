@@ -722,6 +722,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 		if ( $("#GM_fth_highlighted_threads .GM_fth_opened").length ) {
 			$("#GM_fth_highlighted_threads .GM_fth_opened").remove();
 		}
+		// 見歴または履歴なら終了
+		if (isHistory()) {
+			return;
+		}
 		// NGスレとピックアップ済みは除外
 		var opened;
 		var filter =
@@ -979,6 +983,22 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			}
 			document.title = boardName + " " + selectName;
 		}
+	}
+
+	/*
+	 * 見歴または履歴か
+	 */
+	function isHistory() {
+		let cat_bold = document.getElementById("KOSHIAN_reload_cat_bold");
+		if (cat_bold) {
+			return cat_bold.textContent.match(/見歴|履歴/);
+		} else {
+			let bold_a = document.querySelector("html > body > b > a");
+			if (bold_a) {
+				return bold_a.textContent.match(/見歴|履歴/);
+			}
+		}
+		return false;
 	}
 
 })(jQuery);
