@@ -52,6 +52,9 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
   - ねないこの「カタログの既読状況を色分けする」が有効のときは本設定を`false`にしてください。  
 * AKAHUKU\_VISITED\_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
   - MARK\_AKAHUKU\_VISITEDが`true`のときにマークする背景色を設定します。  
+* CAPTION\_POPUP\_WIDTH : futaba catalog mod使用時のスレ本文ポップアップ幅 \(*"200px"*\)  
+  - USE\_FUTABA\_CATALOG\_MODが`true`のときにスレ本文ポップアップの表示幅を設定します。  
+    ポップアップの表示幅はスレ本文の長さに関わらず固定となります。  
 
 
 ## 注意事項
@@ -68,6 +71,10 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev29 2020-03-05
+  - ピックアップしたスレにプルダウンメニューボタンを設置するように修正
+  - futaba catalog mod使用時のスレ本文ポップアップ幅の設定を追加
+  - futaba catalog modの初期パラメータ変更によりスタイル設定を修正
 * v1.6.6rev28 2020-03-03
   - 「見歴」や「履歴」で既読ピックアップしないように修正
   - rev26で暫定対応した新レイアウトのカタログのコードを削除
