@@ -887,7 +887,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				"  padding: 3px !important;" +
 				"  z-index: 1000 !important;" +
 				"  position: absolute !important;" +
-				"  transition: all 0.2s ease 0.2s !important;" +
+				"  transition: all 0.1s ease 0.1s !important;" +
 				"}";
 		}
 
