@@ -799,6 +799,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			"}" +
 			// ピックアップスレ
 			".GM_fth_pickuped {" +
+			"  position: relative;" +
 			"  max-width: 250px;" +
 			"  min-width: 70px;" +
 			"  margin: 1px;" +
@@ -820,6 +821,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			*/
 			// ピックアップ既読スレ
 			".GM_fth_opened {" +
+			"  position: relative;" +
 			"  max-width: 250px;" +
 			"  min-width: 70px;" +
 			"  margin: 1px;" +
