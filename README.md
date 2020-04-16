@@ -46,14 +46,17 @@ KOSHIAN カタログマーカー改のマークのピックアップ例
   - 通常はアドオンが既読マークしたスタイルを自動でコピーしますが、この変数にスタイルを設定すると優先して使用されます。  
 * HIDE\_FUTAKURO\_SEARCHBAR : ふたば@アプリ としあき\(仮\) 出張版のキーワード検索を隠した状態でカタログを開く \(*true*\)  
 * USE\_FUTABA\_CATALOG\_MOD : futaba_catalog_modを使用する \(*false*\)  
-  - himuro_majika氏作のユーザースタイルシートfutaba_catalog_mod（[モダンバージョン](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)）（[クラシックバージョン](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)）を使用するときは設定をtrueにして下さい。ピックアップしたスレの本文の長さを制限し、マウスオーバーで本文をポップアップします。  
+  - himuro_majika氏作のユーザースタイルシートfutaba_catalog_mod（[モダンバージョン](https://userstyles.org/styles/114129/futaba-catalog-mod-modern)）（[クラシックバージョン](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)）を使用するときは設定をtrueにして下さい。ピックアップしたスレの本文の長さを制限します。  
 * MARK\_AKAHUKU\_VISITED : 赤福extended・赤福Firefox spの既読スレの背景をマークする \(*false*\)  
   - 赤福extended・赤福Firefox spでカタログ内の既読スレの背景全体をマークします。  
   - ねないこの「カタログの既読状況を色分けする」が有効のときは本設定を`false`にしてください。  
 * AKAHUKU\_VISITED\_COLOR : 赤福extended・赤福Firefox spの既読スレの背景色 \(*"#ffcc99"*\)  
   - MARK\_AKAHUKU\_VISITEDが`true`のときにマークする背景色を設定します。  
+* USE\_CAPTION\_POPUP : futaba catalog mod使用時にスレ本文をポップアップするか \(*true*\)  
+  - USE\_FUTABA\_CATALOG\_MODが`true`のときにマウスオーバーでスレ本文をポップアップするか設定します。  
+    futaba\_catalog\_modの「マウスオーバーで本文をポップアップ」の設定に合わせてください。  
 * CAPTION\_POPUP\_WIDTH : futaba catalog mod使用時のスレ本文ポップアップ幅 \(*"200px"*\)  
-  - USE\_FUTABA\_CATALOG\_MODが`true`のときにスレ本文ポップアップの表示幅を設定します。  
+  - USE\_CAPTION\_POPUPが`true`のときのスレ本文ポップアップの表示幅を設定します。  
     ポップアップの表示幅はスレ本文の長さに関わらず固定となります。  
 
 
@@ -71,6 +74,9 @@ himuro\_majika氏作のユーザースタイルシートも使ってみてくだ
 [futaba\_catalog\_mod(クラシックバージョン)](https://userstyles.org/styles/114130/futaba-catalog-mod-classic)
 
 ## 更新履歴
+* v1.6.6rev30 2020-04-16
+  - futaba catalog mod使用時にマウスオーバーでスレ本文をポップアップするかの設定を追加
+  - Firefox76以降でスレ本文ポップアップ幅が効かない不具合を修正
 * v1.6.6rev29 2020-03-05
   - ピックアップしたスレにプルダウンメニューボタンを設置するように修正
   - futaba catalog mod使用時のスレ本文ポップアップ幅の設定を追加
