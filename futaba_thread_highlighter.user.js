@@ -28,6 +28,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 	var USE_FUTABA_CATALOG_MOD = false;			// futaba catalog modを使用する
 	var MARK_AKAHUKU_VISITED = false;			// 赤福の既読スレの背景をマークする
 	var AKAHUKU_VISITED_COLOR = "#ffcc99";		// 赤福の既読スレの背景色
+	var USE_CAPTION_POPUP = true;				// futaba catalog mod使用時にスレ本文をポップアップする
 	var CAPTION_POPUP_WIDTH = "200px";			// futaba catalog mod使用時のスレ本文ポップアップ幅（固定）
 
 	var serverName = document.domain.match(/^[^.]+/);
@@ -859,10 +860,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 		if (USE_FUTABA_CATALOG_MOD) {
 			css +=
-				// スレ本文ホバー
-				"#cattable > tbody > tr > td small:hover {" +
-				"  width: " + CAPTION_POPUP_WIDTH + " !important;" +
-				"}" +
 				// ピックアップスレ本文
 				".GM_fth_pickuped_caption," +
 				".GM_fth_opened_caption," +
@@ -873,6 +870,14 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 				"  max-height: 15px !important;" +
 				"  overflow: hidden !important;" +
 				"  word-wrap: break-word;" +
+				"}";
+		}
+
+		if (USE_FUTABA_CATALOG_MOD && USE_CAPTION_POPUP) {
+			css +=
+				// スレ本文ホバー
+				"#cattable > tbody > tr > td small:hover {" +
+				"  width: " + CAPTION_POPUP_WIDTH + " !important;" +
 				"}" +
 				// ピックアップスレ本文ホバー
 				".GM_fth_pickuped_caption:hover," +
