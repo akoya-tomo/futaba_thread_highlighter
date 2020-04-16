@@ -877,7 +877,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 			css +=
 				// スレ本文ホバー
 				"#cattable > tbody > tr > td small:hover {" +
-				"  width: " + CAPTION_POPUP_WIDTH + " !important;" +
+				"  min-width: " + CAPTION_POPUP_WIDTH + " !important;" +
 				"}" +
 				// ピックアップスレ本文ホバー
 				".GM_fth_pickuped_caption:hover," +
